@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg"
+    android:background="@drawable/login_bg"
     tools:context=".login_reg">
 
     <EditText
@@ -73,6 +73,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="17sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editText2"
         app:layout_constraintHorizontal_bias="0.432"
@@ -88,6 +89,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toStartOf="@+id/editText1"
         app:layout_constraintHorizontal_bias="0.551"

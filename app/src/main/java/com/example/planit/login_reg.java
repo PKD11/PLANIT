@@ -71,6 +71,13 @@ public class login_reg extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(login_reg.this, signup_reg.class);
+                startActivity(intent);
+            }
+        });
 
         if(emailvalid(email))
         {

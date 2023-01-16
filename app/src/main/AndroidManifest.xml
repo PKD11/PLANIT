@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PLANIT"
         tools:targetApi="31">
+
         <activity
             android:name=".signup_reg"
             android:exported="false">

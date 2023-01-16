@@ -3,4 +3,6 @@
     <string name="checkbox">Waiting for Response...</string>
     <string name="verify">Verify</string>
     <string name="streak">Streak Upload</string>
+    <string name="upload">Upload</string>
+    <string name="verified">Verified</string>
 </resources>

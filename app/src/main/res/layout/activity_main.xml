@@ -11,73 +11,72 @@
         android:id="@+id/imageView2"
         android:layout_width="100dp"
         android:layout_height="88dp"
+        android:contentDescription="@string/streak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.189"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/streak" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="100dp"
         android:layout_height="87dp"
+        android:contentDescription="@string/streak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.349"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/streak" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="100dp"
         android:layout_height="88dp"
+        android:contentDescription="@string/streak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.509"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/streak" />
+        tools:srcCompat="@tools:sample/avatars" />
 
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="100dp"
         android:layout_height="87dp"
+        android:contentDescription="@string/streak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.669"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/streak" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="100dp"
         android:layout_height="88dp"
+        android:contentDescription="@string/streak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.071"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.829"
-        tools:srcCompat="@tools:sample/avatars"
-        android:contentDescription="@string/streak" />
+        tools:srcCompat="@tools:sample/avatars" />
 
     <Button
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/teal_200"
         android:text="Submit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/button2"
@@ -90,7 +89,6 @@
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/teal_200"
         android:text="Reset"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -99,12 +97,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
 
-    <CheckBox
+    <Button
         android:id="@+id/checkBox2"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/verify"
-        android:textColor="#1ECF9D"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -113,12 +110,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.206" />
 
-    <CheckBox
+    <Button
         android:id="@+id/checkBox3"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/verify"
-        android:textColor="#1ECF9D"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -127,12 +123,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.356" />
 
-    <CheckBox
+    <Button
         android:id="@+id/checkBox4"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/verify"
-        android:textColor="#1ECF9D"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -141,12 +136,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.506" />
 
-    <CheckBox
+    <Button
         android:id="@+id/checkBox5"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/verify"
-        android:textColor="#1ECF9D"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,12 +149,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.656" />
 
-    <CheckBox
+    <Button
         android:id="@+id/checkBox6"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/verify"
-        android:textColor="#1ECF9D"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -169,101 +162,103 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.806" />
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView2"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/TextView2"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="29dp"
         android:hint="@string/checkbox"
         android:textAlignment="center"
-        android:textColor="@color/teal_200"
-        android:textColorHint="@color/teal_200"
+        android:textColor="#22AB22"
+        android:textColorHint="#6C7C7A"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/checkBox2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.206" />
+        app:layout_constraintVertical_bias="0.205" />
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView3"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/TextView3"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="29dp"
         android:hint="@string/checkbox"
         android:textAlignment="center"
-        android:textColor="@color/teal_200"
-        android:textColorHint="@color/teal_200"
+        android:textColor="#22AB22"
+        android:textColorHint="#6C7C7A"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toEndOf="@+id/checkBox3"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.356" />
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView4"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/TextView4"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="29dp"
         android:hint="@string/checkbox"
         android:textAlignment="center"
-        android:textColor="@color/teal_200"
-        android:textColorHint="@color/teal_200"
+        android:textColor="#22AB22"
+        android:textColorHint="#6C7C7A"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toEndOf="@+id/checkBox4"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.506" />
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView5"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/TextView5"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="29dp"
         android:hint="@string/checkbox"
         android:textAlignment="center"
-        android:textColor="@color/teal_200"
-        android:textColorHint="@color/teal_200"
+        android:textColor="#22AB22"
+        android:textColorHint="#6C7C7A"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toEndOf="@+id/checkBox5"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.656" />
 
-    <CheckedTextView
-        android:id="@+id/checkedTextView6"
-        android:layout_width="100dp"
+    <TextView
+        android:id="@+id/TextView6"
+        android:layout_width="0dp"
         android:layout_height="40dp"
+        android:layout_marginEnd="29dp"
         android:hint="@string/checkbox"
         android:textAlignment="center"
-        android:textColor="@color/teal_200"
-        android:textColorHint="@color/teal_200"
+        android:textColor="#22AB22"
+        android:textColorHint="#6C7C7A"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.356"
         app:layout_constraintStart_toEndOf="@+id/checkBox6"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.806" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="58dp"
         android:layout_height="58dp"
         app:cardBackgroundColor="@color/teal_200"
         app:cardCornerRadius="250dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.988"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.988"
         app:layout_constraintVertical_bias="0.009">
 
         <androidx.cardview.widget.CardView
@@ -271,22 +266,116 @@
             android:layout_height="55dp"
             android:layout_gravity="center"
             app:cardCornerRadius="250dp">
+
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
-                tools:srcCompat="@tools:sample/avatars">
+                tools:srcCompat="@tools:sample/avatars"
+                android:contentDescription="pfp">
             </ImageView>
 
             <Spinner
                 android:id="@+id/spinner"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:visibility="visible"
-                android:contentDescription="click">
+                android:contentDescription="click"
+                android:visibility="visible">
             </Spinner>
         </androidx.cardview.widget.CardView>
     </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="163dp"
+        android:gravity="end"
+        android:backgroundTint="@color/material_on_surface_stroke"
+        app:layout_constraintBottom_toTopOf="@+id/button7"
+        app:layout_constraintEnd_toStartOf="@+id/TextView2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button7"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="163dp"
+        android:gravity="end"
+        android:backgroundTint="@color/material_on_surface_stroke"
+        app:layout_constraintBottom_toTopOf="@+id/button8"
+        app:layout_constraintEnd_toStartOf="@+id/TextView3"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button8"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginEnd="167dp"
+        android:gravity="end"
+        android:backgroundTint="@color/material_on_surface_stroke"
+        app:layout_constraintBottom_toTopOf="@+id/button9"
+        app:layout_constraintEnd_toStartOf="@+id/TextView4"
+        app:layout_constraintHorizontal_bias="0.076"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="163dp"
+        android:gravity="end"
+        android:backgroundTint="@color/material_on_surface_stroke"
+        app:layout_constraintBottom_toTopOf="@+id/button10"
+        app:layout_constraintEnd_toStartOf="@+id/TextView5"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4"
+        app:layout_constraintVertical_bias="0.128" />
+
+    <Button
+        android:id="@+id/button10"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="26dp"
+        android:layout_marginEnd="163dp"
+        android:gravity="end"
+        android:backgroundTint="@color/material_on_surface_stroke"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintEnd_toStartOf="@+id/TextView6"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:background="@drawable/green_earth"
+        android:gravity="bottom"
+        android:text="   Daily Plan"
+        android:textColor="#FD510C11"
+        android:textSize="30dp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.049" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

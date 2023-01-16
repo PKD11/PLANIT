@@ -11,7 +11,7 @@
     <EditText
         android:id="@+id/editText1"
         android:layout_width="250dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:ems="25"
         android:hint="Name"
         android:inputType="text"
@@ -25,7 +25,7 @@
     <EditText
         android:id="@+id/editText2"
         android:layout_width="250dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:ems="3"
         android:hint="Age"
         android:inputType="number"
@@ -39,7 +39,7 @@
     <EditText
         android:id="@+id/editText3"
         android:layout_width="250dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:ems="100"
         android:hint="Location"
         android:inputType="text"
@@ -53,12 +53,11 @@
     <EditText
         android:id="@+id/editText4"
         android:layout_width="250dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:autofillHints="abc@gmail.com"
         android:ems="40"
         android:hint="Email"
         android:inputType="textEmailAddress"
-        android:textAlignment="center"
         android:textStyle="normal"
         app:layout_constraintBottom_toTopOf="@+id/editText5"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,7 +69,7 @@
     <EditText
         android:id="@+id/editText5"
         android:layout_width="250dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:autofillHints="abc@948"
         android:ems="6"
         android:hint="Password"
@@ -90,6 +89,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editText1"
         app:layout_constraintHorizontal_bias="0.32"
@@ -105,6 +105,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editText2"
         app:layout_constraintHorizontal_bias="0.32"
@@ -120,6 +121,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editText3"
         app:layout_constraintHorizontal_bias="0.32"
@@ -136,6 +138,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@+id/editText4"
         app:layout_constraintHorizontal_bias="0.32"
@@ -151,6 +154,7 @@
         android:textAlignment="center"
         android:textColor="#FD510C11"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/editText5"
         app:layout_constraintHorizontal_bias="0.32"
@@ -167,6 +171,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText5" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="105dp"
+        android:layout_height="105dp"
+        app:cardBackgroundColor="#006400"
+        app:cardCornerRadius="110dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintVertical_bias="0.075"
+        android:contentDescription="@string/upload">
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="250dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                tools:srcCompat="@tools:sample/avatars">
+            </ImageView>
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="@string/upload"
+                android:backgroundTint="@color/material_on_surface_stroke">
+            </Button>
+        </androidx.cardview.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
