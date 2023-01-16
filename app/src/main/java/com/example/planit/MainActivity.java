@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, 100);
@@ -81,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, 200);
@@ -89,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, 300);
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, 400);
@@ -105,6 +109,7 @@ public class MainActivity extends AppCompatActivity {
         button10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent, 500);
@@ -136,7 +141,11 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) textView2.setText(R.string.verified);
+                    if(isvalid(arr))
+                    {
+                        textView2.setText(R.string.verified);
+                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     // TODO Handle the exception
                     Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
@@ -168,7 +177,11 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) textView3.setText(R.string.verified);
+                    if(isvalid(arr))
+                    {
+                        textView3.setText(R.string.verified);
+                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     // TODO Handle the exception
                     Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
@@ -200,7 +213,10 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) textView4.setText(R.string.verified);
+                    if(isvalid(arr)) {
+                        textView4.setText(R.string.verified);
+                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     // TODO Handle the exception
                     Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
@@ -232,7 +248,10 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) textView5.setText(R.string.verified);
+                    if(isvalid(arr)) {
+                        textView5.setText(R.string.verified);
+                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     // TODO Handle the exception
                     Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
@@ -264,7 +283,10 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) textView6.setText(R.string.verified);
+                    if(isvalid(arr)) {
+                        textView6.setText(R.string.verified);
+                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    }
                 } catch (IOException e) {
                     // TODO Handle the exception
                     Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();

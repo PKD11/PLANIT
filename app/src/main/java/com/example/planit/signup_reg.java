@@ -45,13 +45,12 @@ public class signup_reg extends AppCompatActivity {
         imageView=findViewById(R.id.imageView);
 
         button=findViewById(R.id.button);
-        button2 = findViewById(R.id.button2);
+        button2=findViewById(R.id.button2);
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(signup_reg.this, "Choose an image", Toast.LENGTH_SHORT).show();
-
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent,200);
@@ -79,6 +78,7 @@ public class signup_reg extends AppCompatActivity {
             Uri uri=data.getData();
             try {
                 bmp= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
+                bmp=Bitmap.createScaledBitmap(bmp,100,100,true);
             } catch (IOException e) {
                 e.printStackTrace();
             }

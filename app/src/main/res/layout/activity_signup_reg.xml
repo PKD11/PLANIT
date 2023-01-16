@@ -172,40 +172,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText5" />
 
-    <androidx.cardview.widget.CardView
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="105dp"
         android:layout_height="105dp"
-        app:cardBackgroundColor="#006400"
-        app:cardCornerRadius="110dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.075"
-        android:contentDescription="@string/upload">
-        <androidx.cardview.widget.CardView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center"
-            app:cardCornerRadius="250dp">
+        android:contentDescription="@string/upload" />
 
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                tools:srcCompat="@tools:sample/avatars">
-            </ImageView>
-
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:contentDescription="@string/upload"
-                android:backgroundTint="@color/material_on_surface_stroke">
-            </Button>
-        </androidx.cardview.widget.CardView>
-    </androidx.cardview.widget.CardView>
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:backgroundTint="@color/material_on_surface_stroke"
+        android:contentDescription="@string/upload"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.114">
+    </Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
