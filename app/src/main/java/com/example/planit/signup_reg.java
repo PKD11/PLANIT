@@ -29,8 +29,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import java.io.IOException;
+import com.squareup.picasso.Picasso;
 
 public class signup_reg extends AppCompatActivity {
     private FirebaseAuth mAuth;
@@ -41,6 +44,7 @@ public class signup_reg extends AppCompatActivity {
     EditText editText1, editText2, editText3, editText4, editText5;
     ImageView imageView;
     Bitmap bmp;
+    StorageReference storageReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -95,27 +99,30 @@ public class signup_reg extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     User user=new User(name,age,email,loc);
-                    //save user to firebase
-                   FirebaseDatabase.getInstance().getReference("Users")
-                           .child(mAuth.getCurrentUser().getUid())
-                           .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                    dbroot= FirebaseFirestore.getInstance();
+//
+                    dbroot.collection("users").document(email).set(user);
+
+                    Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
+
+                    //save user to firebase using realtime database not required
+//                   FirebaseDatabase.getInstance().getReference("Users")
+//                           .child(mAuth.getCurrentUser().getUid())
+//                           .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(signup_reg.this, "You have sucessfully registered!!", Toast.LENGTH_SHORT).show();
-//                                Intent intent=new Intent(signup_reg.this,MainActivity.class);
-//                                startActivity(intent);
+                                Intent intent=new Intent(signup_reg.this,MainActivity.class);
+                                startActivity(intent);
                             }
-                            else{
-                                Toast.makeText(signup_reg.this, "Registration failed!!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+//                            else{
+//                                Toast.makeText(signup_reg.this, "Registration failed!!", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
+//
 
-//                    dbroot= FirebaseFirestore.getInstance();
-
-//                    dbroot.collection("users").document(email).set(user);
-                    Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Toast.makeText(signup_reg.this, "Error!!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -142,5 +149,26 @@ public class signup_reg extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+    }
+    private void uploadImageToFirebase(Uri imageUri) {
+        // uplaod image to firebase storage
+        final StorageReference fileRef = storageReference.child("users/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        Picasso.get().load(uri).into(imageView);
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getApplicationContext(), "Failed.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 }

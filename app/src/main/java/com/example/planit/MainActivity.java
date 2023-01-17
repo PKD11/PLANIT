@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     Bitmap b1,b2,b3,b4,b5,b6;
     FirebaseFirestore dbroot;
 
-    Boolean doneToday=false;
+    Boolean doneToday;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
         button8=findViewById(R.id.button8);
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
+        buttonSub=findViewById(R.id.buttonSubmit);
 
         textView2=findViewById(R.id.TextView2);
         textView3=findViewById(R.id.TextView3);
