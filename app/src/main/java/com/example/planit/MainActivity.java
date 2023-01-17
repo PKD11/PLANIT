@@ -32,7 +32,7 @@ import java.nio.ByteBuffer;
 public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
-    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2;
+    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2, button;
     ImageView imageView,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
@@ -61,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         imageView5=findViewById(R.id.imageView5);
         imageView6=findViewById(R.id.imageView6);
 
+        button=findViewById(R.id.button);
+        button2=findViewById(R.id.button2);
         button6=findViewById(R.id.button6);
         button7=findViewById(R.id.button7);
         button8=findViewById(R.id.button8);
@@ -344,7 +346,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Tasks Reset", Toast.LENGTH_SHORT).show();
+                button6.setEnabled(true);
+                button7.setEnabled(true);
+                button8.setEnabled(true);
+                button9.setEnabled(true);
+                button10.setEnabled(true);
+            }
+        });
     }
 
     @Override
