@@ -1,11 +1,15 @@
 package com.example.planit;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -65,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
         imageView5=findViewById(R.id.imageView5);
         imageView6=findViewById(R.id.imageView6);
 
+        button2=findViewById(R.id.button2);
         button6=findViewById(R.id.button6);
         button7=findViewById(R.id.button7);
         button8=findViewById(R.id.button8);
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
-        buttonSub=findViewById(R.id.buttonSubmit);
 
         textView2=findViewById(R.id.TextView2);
         textView3=findViewById(R.id.TextView3);
@@ -358,7 +362,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Tasks Reset", Toast.LENGTH_SHORT).show();
+                button6.setEnabled(true);
+                button7.setEnabled(true);
+                button8.setEnabled(true);
+                button9.setEnabled(true);
+                button10.setEnabled(true);
+            }
+        });
     }
 
     @Override
