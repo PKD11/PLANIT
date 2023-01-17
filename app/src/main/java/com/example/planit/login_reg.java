@@ -83,15 +83,16 @@ public class login_reg extends AppCompatActivity {
         {
 
         }
-        else
-            Toast.makeText(this, "wrong email address", Toast.LENGTH_SHORT).show();
+        else {
+//            Toast.makeText(this, "wrong email address", Toast.LENGTH_SHORT).show();
+        }
         if(pswdvalid(pswd))
         {
 
         }
-        else
-            Toast.makeText(this, "Password must contain 6 character & only letters & digits", Toast.LENGTH_SHORT).show();
-
+        else {
+//            Toast.makeText(this, "Password must contain 6 character & only letters & digits", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
