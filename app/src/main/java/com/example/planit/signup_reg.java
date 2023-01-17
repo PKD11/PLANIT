@@ -103,7 +103,7 @@ public class signup_reg extends AppCompatActivity {
                     dbroot.collection("users").document(email).set(user);
 
                     Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
-//                                    uploadImageToFirebase(uri);
+                                    uploadImageToFirebase(uri);
 
 
                     if(task.isSuccessful()){

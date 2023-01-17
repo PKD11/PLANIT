@@ -24,7 +24,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.planit.ml.ModelUnquant;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -37,11 +42,13 @@ public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
     Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2,buttonSub;
-    ImageView imageView,imageView2, imageView3, imageView4, imageView5, imageView6;
+    ImageView ProfilePic,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
     FirebaseFirestore dbroot;
-
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    StorageReference storageReference;
     Boolean doneToday;
 
     @SuppressLint("MissingInflatedId")
@@ -62,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         checkBox5=findViewById(R.id.checkBox5);
         checkBox6=findViewById(R.id.checkBox6);
 
-        imageView=findViewById(R.id.imageView);
+        ProfilePic=findViewById(R.id.ProfileImage);
         imageView2=findViewById(R.id.imageView2);
         imageView3=findViewById(R.id.imageView3);
         imageView4=findViewById(R.id.imageView4);
@@ -85,7 +92,18 @@ public class MainActivity extends AppCompatActivity {
 
         String[] task={"Planting","Garbage","Cleaning","Watering"};
 
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
 
+
+        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(ProfilePic);
+            }
+        });
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
