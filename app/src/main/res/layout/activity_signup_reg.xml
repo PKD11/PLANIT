@@ -174,15 +174,17 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="105dp"
-        android:layout_height="105dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
+        android:padding="1dp"
+        android:background="#006400"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.075"
-        android:contentDescription="@string/upload" />
+        android:contentDescription="@string/pfp" />
 
     <Button
         android:id="@+id/button2"

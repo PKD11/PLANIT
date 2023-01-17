@@ -32,7 +32,7 @@ import java.nio.ByteBuffer;
 public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
-    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10;
+    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2;
     ImageView imageView,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     requestPermissions(new String[]{Manifest.permission.CAMERA},1);
                 }
+                button6.setEnabled(false);
             }
         });
         button7.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     requestPermissions(new String[]{Manifest.permission.CAMERA},2);
                 }
+                button7.setEnabled(false);
             }
         });
         button8.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     requestPermissions(new String[]{Manifest.permission.CAMERA},3);
                 }
+                button8.setEnabled(false);
             }
         });
         button9.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +144,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     requestPermissions(new String[]{Manifest.permission.CAMERA},4);
                 }
+                button9.setEnabled(false);
             }
         });
         button10.setOnClickListener(new View.OnClickListener() {
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 {
                     requestPermissions(new String[]{Manifest.permission.CAMERA},5);
                 }
+                button10.setEnabled(false);
             }
         });
 
@@ -338,6 +343,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
     }
 
     @Override
