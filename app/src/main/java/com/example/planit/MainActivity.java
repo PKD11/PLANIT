@@ -1,15 +1,11 @@
 package com.example.planit;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.media.ThumbnailUtils;
-import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -20,7 +16,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.planit.ml.ModelUnquant;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -32,14 +32,18 @@ import java.nio.ByteBuffer;
 public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
-    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2;
+    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2,buttonSub;
     ImageView imageView,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
+    FirebaseFirestore dbroot;
+
+    Boolean doneToday=false;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    dbroot=FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -66,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         button8=findViewById(R.id.button8);
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
+        buttonSub=findViewById(R.id.buttonSubmit);
 
         textView2=findViewById(R.id.TextView2);
         textView3=findViewById(R.id.TextView3);
@@ -75,6 +80,15 @@ public class MainActivity extends AppCompatActivity {
 
         String[] task={"Planting","Garbage","Cleaning","Watering"};
 
+
+        buttonSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              doneToday=true;
+              //check previous date and update accordingly;
+                Toast.makeText(MainActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
+            }
+        });
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
