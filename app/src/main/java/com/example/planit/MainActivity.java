@@ -3,9 +3,12 @@ package com.example.planit;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,7 +20,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.planit.ml.MobilenetV110224Quant;
+import com.example.planit.ml.ModelUnquant;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -70,49 +73,91 @@ public class MainActivity extends AppCompatActivity {
         textView5=findViewById(R.id.TextView5);
         textView6=findViewById(R.id.TextView6);
 
+        String[] task={"Planting","Garbage","Cleaning","Watering"};
+
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 100);
+                // Launch camera if we have permission
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "Opening Camera", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,100);
+                }
+                //Ask for permission if needed
+                else
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},1);
+                }
             }
         });
         button7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 200);
+                // Launch camera if we have permission
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "Opening Camera", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,200);
+                }
+                //Ask for permission if needed
+                else
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},2);
+                }
             }
         });
         button8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 300);
+                // Launch camera if we have permission
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "Opening Camera", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,300);
+                }
+                //Ask for permission if needed
+                else
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},3);
+                }
             }
         });
         button9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 400);
+                // Launch camera if we have permission
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "Opening Camera", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,400);
+                }
+                //Ask for permission if needed
+                else
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},4);
+                }
             }
         });
         button10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Choose an image", Toast.LENGTH_SHORT).show();
-                Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 500);
+                // Launch camera if we have permission
+                if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "Opening Camera", Toast.LENGTH_SHORT).show();
+                    Intent intent= new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(intent,500);
+                }
+                //Ask for permission if needed
+                else
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA},5);
+                }
             }
         });
 
@@ -121,19 +166,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 b2=Bitmap.createScaledBitmap(b2, 224,224,true);
                 try {
-                    MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getApplicationContext());
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
                     // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
 
-                    TensorImage tensorImage= new TensorImage(DataType.UINT8);
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
                     tensorImage.load(b2);
                     ByteBuffer byteBuffer= tensorImage.getBuffer();
 
                     inputFeature0.loadBuffer(byteBuffer);
 
                     // Runs model inference and gets result.
-                    MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
                     TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
                     float[] arr=outputFeature0.getFloatArray();
@@ -141,11 +186,12 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr))
-                    {
-                        textView2.setText(R.string.verified);
-                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView2.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
                     }
+                    else
+                        Toast.makeText(MainActivity.this, "Disapointment", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     // TODO Handle the exception
                     Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
@@ -157,19 +203,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 b3=Bitmap.createScaledBitmap(b3, 224,224,true);
                 try {
-                    MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getApplicationContext());
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
                     // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
 
-                    TensorImage tensorImage= new TensorImage(DataType.UINT8);
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
                     tensorImage.load(b3);
                     ByteBuffer byteBuffer= tensorImage.getBuffer();
 
                     inputFeature0.loadBuffer(byteBuffer);
 
                     // Runs model inference and gets result.
-                    MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
                     TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
                     float[] arr=outputFeature0.getFloatArray();
@@ -177,10 +223,9 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr))
-                    {
-                        textView3.setText(R.string.verified);
-                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView3.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
                     // TODO Handle the exception
@@ -193,19 +238,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 b4=Bitmap.createScaledBitmap(b4, 224,224,true);
                 try {
-                    MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getApplicationContext());
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
                     // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
 
-                    TensorImage tensorImage= new TensorImage(DataType.UINT8);
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
                     tensorImage.load(b4);
                     ByteBuffer byteBuffer= tensorImage.getBuffer();
 
                     inputFeature0.loadBuffer(byteBuffer);
 
                     // Runs model inference and gets result.
-                    MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
                     TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
                     float[] arr=outputFeature0.getFloatArray();
@@ -213,9 +258,9 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) {
-                        textView4.setText(R.string.verified);
-                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView4.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
                     // TODO Handle the exception
@@ -228,19 +273,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 b5=Bitmap.createScaledBitmap(b5, 224,224,true);
                 try {
-                    MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getApplicationContext());
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
                     // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
 
-                    TensorImage tensorImage= new TensorImage(DataType.UINT8);
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
                     tensorImage.load(b5);
                     ByteBuffer byteBuffer= tensorImage.getBuffer();
 
                     inputFeature0.loadBuffer(byteBuffer);
 
                     // Runs model inference and gets result.
-                    MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
                     TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
                     float[] arr=outputFeature0.getFloatArray();
@@ -248,9 +293,9 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) {
-                        textView5.setText(R.string.verified);
-                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView5.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
                     // TODO Handle the exception
@@ -263,19 +308,19 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 b6=Bitmap.createScaledBitmap(b6, 224,224,true);
                 try {
-                    MobilenetV110224Quant model = MobilenetV110224Quant.newInstance(getApplicationContext());
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
                     // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.UINT8);
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
 
-                    TensorImage tensorImage= new TensorImage(DataType.UINT8);
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
                     tensorImage.load(b6);
                     ByteBuffer byteBuffer= tensorImage.getBuffer();
 
                     inputFeature0.loadBuffer(byteBuffer);
 
                     // Runs model inference and gets result.
-                    MobilenetV110224Quant.Outputs outputs = model.process(inputFeature0);
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
                     TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
 
                     float[] arr=outputFeature0.getFloatArray();
@@ -283,9 +328,9 @@ public class MainActivity extends AppCompatActivity {
                     // Releases model resources if no longer used.
                     model.close();
 
-                    if(isvalid(arr)) {
-                        textView6.setText(R.string.verified);
-                        Toast.makeText(MainActivity.this, "Well done!", Toast.LENGTH_SHORT).show();
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView6.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
                     }
                 } catch (IOException e) {
                     // TODO Handle the exception
@@ -299,69 +344,59 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==100)
+        if(requestCode==100 && resultCode==RESULT_OK)
         {
             assert data != null;
-            imageView2.setImageURI(data.getData());
+            b2=(Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(b2.getHeight(),b2.getWidth());
+            b2= ThumbnailUtils.extractThumbnail(b2,dimension,dimension);
 
-            Uri uri=data.getData();
-            try {
-                b2= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            imageView2.setImageBitmap(b2);
+
         }
-        if(requestCode==200)
+        if(requestCode==200 && resultCode==RESULT_OK)
         {
             assert data != null;
-            imageView3.setImageURI(data.getData());
+            b3=(Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(b3.getHeight(),b3.getWidth());
+            b3= ThumbnailUtils.extractThumbnail(b3,dimension,dimension);
 
-            Uri uri=data.getData();
-            try {
-                b3= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            imageView3.setImageBitmap(b3);
+
         }
-        if(requestCode==300)
+        if(requestCode==300 && resultCode==RESULT_OK)
         {
             assert data != null;
-            imageView4.setImageURI(data.getData());
+            b4=(Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(b4.getHeight(),b4.getWidth());
+            b4= ThumbnailUtils.extractThumbnail(b4,dimension,dimension);
 
-            Uri uri=data.getData();
-            try {
-                b4= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            imageView4.setImageBitmap(b4);
+
         }
-        if(requestCode==400)
+        if(requestCode==400 && resultCode==RESULT_OK)
         {
             assert data != null;
-            imageView5.setImageURI(data.getData());
+            b5=(Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(b5.getHeight(),b5.getWidth());
+            b5= ThumbnailUtils.extractThumbnail(b5,dimension,dimension);
 
-            Uri uri=data.getData();
-            try {
-                b5= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            imageView5.setImageBitmap(b5);
+
         }
-        if(requestCode==500)
+        if(requestCode==500 && resultCode==RESULT_OK)
         {
             assert data != null;
-            imageView6.setImageURI(data.getData());
+            b6=(Bitmap) data.getExtras().get("data");
+            int dimension = Math.min(b6.getHeight(),b6.getWidth());
+            b6= ThumbnailUtils.extractThumbnail(b6,dimension,dimension);
 
-            Uri uri=data.getData();
-            try {
-                b6= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            imageView6.setImageBitmap(b6);
+
         }
     }
 
-    public boolean isvalid(float[] arr)
+    public int isvalid(float[] arr)
     {
         int max=0;float con=0;
         for(int i=0; i<arr.length;i++){
@@ -370,6 +405,6 @@ public class MainActivity extends AppCompatActivity {
                 max=i;
             }
         }
-        return max > 0;
+        return max;
     }
 }

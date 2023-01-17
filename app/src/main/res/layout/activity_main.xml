@@ -364,7 +364,6 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="43dp"
-        android:background="@drawable/green_earth"
         android:gravity="bottom"
         android:text="   Daily Plan"
         android:textColor="#FD510C11"
