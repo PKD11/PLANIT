@@ -45,13 +45,13 @@ public class signup_reg extends AppCompatActivity {
     ImageView imageView;
     Bitmap bmp;
     StorageReference storageReference;
-
+    Uri uri;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_reg);
-
+        storageReference = FirebaseStorage.getInstance().getReference();
         editText1=findViewById(R.id.editText1);
         editText2=findViewById(R.id.editText2);
         editText3=findViewById(R.id.editText3);
@@ -77,7 +77,7 @@ public class signup_reg extends AppCompatActivity {
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(signup_reg.this, "You have sucessfully registered!!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(signup_reg.this, "You have successfully registered!!", Toast.LENGTH_SHORT).show();
                 RegisterUser();
 
 
@@ -91,7 +91,6 @@ public class signup_reg extends AppCompatActivity {
         Integer age= Integer.valueOf(editText2.getText().toString());
         String email=editText4.getText().toString();
         String loc=editText3.getText().toString();
-
         String pswd=editText5.getText().toString();
 
         mAuth.createUserWithEmailAndPassword(email,pswd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -104,25 +103,17 @@ public class signup_reg extends AppCompatActivity {
                     dbroot.collection("users").document(email).set(user);
 
                     Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
+//                                    uploadImageToFirebase(uri);
 
-                    //save user to firebase using realtime database not required
-//                   FirebaseDatabase.getInstance().getReference("Users")
-//                           .child(mAuth.getCurrentUser().getUid())
-//                           .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(signup_reg.this, "You have sucessfully registered!!", Toast.LENGTH_SHORT).show();
+
+                    if(task.isSuccessful()){
+                                Toast.makeText(signup_reg.this, "You have successfully registered!!", Toast.LENGTH_SHORT).show();
                                 Intent intent=new Intent(signup_reg.this,MainActivity.class);
                                 startActivity(intent);
                             }
-//                            else{
-//                                Toast.makeText(signup_reg.this, "Registration failed!!", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
-//
-
+                            else{
+                                Toast.makeText(signup_reg.this, "Registration failed!!", Toast.LENGTH_SHORT).show();
+                            }
                 }
                 else{
                     Toast.makeText(signup_reg.this, "Error!!"+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -141,10 +132,12 @@ public class signup_reg extends AppCompatActivity {
         {
             assert data != null;
             imageView.setImageURI(data.getData());
-            Uri uri=data.getData();
+             uri=data.getData();
             try {
                 bmp= MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
                 bmp=Bitmap.createScaledBitmap(bmp,100,100,true);
+//                uploadImageToFirebase(uri);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -159,14 +152,18 @@ public class signup_reg extends AppCompatActivity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(imageView);
+                        // image uploaded to firebase storage toast
+                        Toast.makeText(signup_reg.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
+//                        Picasso.get().load(uri).into(imageView);
                     }
                 });
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getApplicationContext(), "Failed.", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(getApplicationContext(), "Failed."+ e, Toast.LENGTH_SHORT).show();
+
             }
         });
 
