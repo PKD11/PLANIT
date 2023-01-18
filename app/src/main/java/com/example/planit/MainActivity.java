@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -35,7 +36,7 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     Spinner spinner;
     Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button2,buttonSub;
@@ -57,9 +58,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinner=findViewById(R.id.spinner);
-        String[] action = {"Profile","Community","Report Error","Logout"};
-        ArrayAdapter<String>adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, action);
+        spinner.setOnItemSelectedListener(this);
+        String[] action = {"Profile","Task Board","Report Error","Logout"};
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, action);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
         checkBox2=findViewById(R.id.checkBox2);
@@ -376,5 +378,25 @@ public class MainActivity extends AppCompatActivity {
             // TODO Handle the exception
             Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
         }
+    }
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        String func= adapterView.getItemAtPosition(i).toString();
+        switch (func) {
+            case "Task Board":
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case "Profile":
+                startActivity(new Intent(this, Profile.class));
+                break;
+            case "Logout":
+                startActivity(new Intent(this, login_reg.class));
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

@@ -68,7 +68,7 @@ public class login_reg extends AppCompatActivity {
                             startActivity(new Intent(getApplicationContext(),community.class));
                         }else {
                             Toast.makeText(login_reg.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-//                            progressBar.setVisibility(View.GONE);
+//                          progressBar.setVisibility(View.GONE);
                         }
                     }
                 });

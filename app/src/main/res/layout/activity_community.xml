@@ -62,7 +62,7 @@
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toTopOf="@+id/dividerh1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.067"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/dividerh"
         app:layout_constraintVertical_bias="1.0"
@@ -317,9 +317,10 @@
         android:layout_height="90dp"
         app:layout_constraintBottom_toTopOf="@+id/dividerh4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerh3"
+        app:layout_constraintVertical_bias="0.511"
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
@@ -393,10 +394,9 @@
         app:layout_constraintVertical_bias="0.517" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imageViewreg"
         android:layout_width="55dp"
         android:layout_height="55dp"
-
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.973"
@@ -411,11 +411,11 @@
         android:layout_height="48dp"
         android:contentDescription="click"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewreg"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewreg"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageViewreg"
+        app:layout_constraintTop_toTopOf="@+id/imageViewreg"
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
