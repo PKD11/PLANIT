@@ -188,8 +188,8 @@
 
     <Button
         android:id="@+id/buttonImgReg"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:backgroundTint="@color/material_on_surface_stroke"
         android:contentDescription="@string/upload"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -197,8 +197,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.114">
-    </Button>
+        app:layout_constraintVertical_bias="0.114"></Button>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

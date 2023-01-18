@@ -23,42 +23,6 @@ public class login_reg extends AppCompatActivity {
     FirebaseAuth fAuth;
     EditText editText1,editText2;
     Button loginButton,button5;
-    public static boolean emailvalid(String email)
-    {
-        String regex="^(.+)@(.+)$";
-        Pattern pattern=Pattern.compile(regex);
-        Matcher matcher=pattern.matcher(email);
-        return matcher.matches();
-    }
-    public static boolean pswdvalid(String pswd)
-    {
-        if(pswd.length()==6)
-        {
-            int numCount = 0, charCount = 0;
-            for (int i = 0; i < pswd.length(); i++)
-            {
-                char ch = pswd.charAt(i);
-                if (is_Numeric(ch))
-                    numCount++;
-                else if (is_Letter(ch))
-                    charCount++;
-                else
-                    return false;
-            }
-            return true;
-        }
-        else
-            return false;
-    }
-    public static boolean is_Letter(char ch) {
-        ch = Character.toUpperCase(ch);
-        return (ch >= 'A' && ch <= 'Z');
-    }
-    public static boolean is_Numeric(char ch) {
-        return (ch >= '0' && ch <= '9');
-    }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,16 +35,6 @@ public class login_reg extends AppCompatActivity {
         loginButton=findViewById(R.id.login1);
         button5=findViewById(R.id.login2);
         fAuth = FirebaseAuth.getInstance();
-
-
-//        loginButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent=new Intent(login_reg.this, MainActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +58,6 @@ public class login_reg extends AppCompatActivity {
                     return;
                 }
 
-
                 // authenticate the user
 
                 fAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -112,18 +65,16 @@ public class login_reg extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Toast.makeText(login_reg.this, "Logged in Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            startActivity(new Intent(getApplicationContext(),community.class));
                         }else {
                             Toast.makeText(login_reg.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
 //                            progressBar.setVisibility(View.GONE);
                         }
-
                     }
                 });
 
             }
         });
-
 
         button5.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,22 +83,5 @@ public class login_reg extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-//        if(emailvalid(email))
-//        {
-//
-//        }
-//        else {
-////            Toast.makeText(this, "wrong email address", Toast.LENGTH_SHORT).show();
-//        }
-//        if(pswdvalid(password))
-//        {
-//
-//        }
-//        else {
-////            Toast.makeText(this, "Password must contain 6 character & only letters & digits", Toast.LENGTH_SHORT).show();
-//        }
     }
-
-
 }

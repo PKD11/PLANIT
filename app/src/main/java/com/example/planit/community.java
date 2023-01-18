@@ -16,8 +16,9 @@ public class community extends AppCompatActivity {
         setContentView(R.layout.activity_community);
 
         spinner=findViewById(R.id.spinner);
-        String[] action = {"Edit Profile","Task Board","Logout"};
+        String[] action = {"Profile","Community","Report Error","Logout"};
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, action);
         spinner.setAdapter(adapter);
+
     }
 }

@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -14,17 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PLANIT"
         tools:targetApi="31">
-
+        <activity
+            android:name=".Profile"
+            android:exported="false"
+            android:label="Profile Page \ud83d\udc64">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".community"
+            android:exported="false"
+            android:label="Community Forum \ud83d\udc65">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
         <activity
             android:name=".signup_reg"
-            android:exported="false">
+            android:exported="false"
+            android:label="Registration \ud83c\udf89">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".welcome_page"
-            android:exported="true">
+            android:exported="true"
+            android:label=" ">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -38,6 +57,7 @@
         <activity
             android:name=".login_reg"
             android:exported="false"
+            android:label="Welcome Back \ud83d\ude0a"
             android:parentActivityName=".welcome_page">
             <meta-data
                 android:name="android.app.lib_name"
@@ -46,7 +66,8 @@
         <activity
             android:name=".MainActivity"
             android:allowTaskReparenting="true"
-            android:exported="false">
+            android:exported="false"
+            android:label="Task Board \ud83d\udcdd">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

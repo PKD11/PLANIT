@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -37,7 +38,8 @@ import java.nio.ByteBuffer;
 public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
-    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2,buttonSub;
+    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button2,buttonSub;
+    ImageButton button6, button7, button8, button9, button10;
     ImageView ProfilePic,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
     StorageReference storageReference;
     Boolean doneToday;
 
+    String[] task={"Planting","Garbage","Cleaning","Watering"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     dbroot=FirebaseFirestore.getInstance();
@@ -54,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         spinner=findViewById(R.id.spinner);
-        String[] action = {"Edit Profile","Dashboard","Report Error","Logout"};
+        String[] action = {"Profile","Community","Report Error","Logout"};
         ArrayAdapter<String>adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, action);
         spinner.setAdapter(adapter);
 
@@ -84,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         textView4=findViewById(R.id.TextView4);
         textView5=findViewById(R.id.TextView5);
         textView6=findViewById(R.id.TextView6);
-
-        String[] task={"Planting","Garbage","Cleaning","Watering"};
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -202,180 +204,55 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 b2=Bitmap.createScaledBitmap(b2, 224,224,true);
-                try {
-                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-                    // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-
-                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
-                    tensorImage.load(b2);
-                    ByteBuffer byteBuffer= tensorImage.getBuffer();
-
-                    inputFeature0.loadBuffer(byteBuffer);
-
-                    // Runs model inference and gets result.
-                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
-                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-                    float[] arr=outputFeature0.getFloatArray();
-
-                    // Releases model resources if no longer used.
-                    model.close();
-
-                    if(isvalid(arr)==(int)isvalid(arr)) {
-                        textView2.setText(task[isvalid(arr)]);
-                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                    }
-                    else
-                        Toast.makeText(MainActivity.this, "Disapointment", Toast.LENGTH_SHORT).show();
-                } catch (IOException e) {
-                    // TODO Handle the exception
-                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
-                }
+                recognizer(b2,textView2);
             }
         });
         checkBox3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b3=Bitmap.createScaledBitmap(b3, 224,224,true);
-                try {
-                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-                    // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-
-                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
-                    tensorImage.load(b3);
-                    ByteBuffer byteBuffer= tensorImage.getBuffer();
-
-                    inputFeature0.loadBuffer(byteBuffer);
-
-                    // Runs model inference and gets result.
-                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
-                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-                    float[] arr=outputFeature0.getFloatArray();
-
-                    // Releases model resources if no longer used.
-                    model.close();
-
-                    if(isvalid(arr)==(int)isvalid(arr)) {
-                        textView3.setText(task[isvalid(arr)]);
-                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    // TODO Handle the exception
-                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
-                }
+                recognizer(b3,textView3);
             }
         });
         checkBox4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b4=Bitmap.createScaledBitmap(b4, 224,224,true);
-                try {
-                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-                    // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-
-                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
-                    tensorImage.load(b4);
-                    ByteBuffer byteBuffer= tensorImage.getBuffer();
-
-                    inputFeature0.loadBuffer(byteBuffer);
-
-                    // Runs model inference and gets result.
-                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
-                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-                    float[] arr=outputFeature0.getFloatArray();
-
-                    // Releases model resources if no longer used.
-                    model.close();
-
-                    if(isvalid(arr)==(int)isvalid(arr)) {
-                        textView4.setText(task[isvalid(arr)]);
-                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    // TODO Handle the exception
-                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
-                }
+                recognizer(b4,textView4);
             }
         });
         checkBox5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b5=Bitmap.createScaledBitmap(b5, 224,224,true);
-                try {
-                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-                    // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-
-                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
-                    tensorImage.load(b5);
-                    ByteBuffer byteBuffer= tensorImage.getBuffer();
-
-                    inputFeature0.loadBuffer(byteBuffer);
-
-                    // Runs model inference and gets result.
-                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
-                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-                    float[] arr=outputFeature0.getFloatArray();
-
-                    // Releases model resources if no longer used.
-                    model.close();
-
-                    if(isvalid(arr)==(int)isvalid(arr)) {
-                        textView5.setText(task[isvalid(arr)]);
-                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    // TODO Handle the exception
-                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
-                }
+                recognizer(b5,textView5);
             }
         });
         checkBox6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b6=Bitmap.createScaledBitmap(b6, 224,224,true);
-                try {
-                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-                    // Creates inputs for reference.
-                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-
-                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
-                    tensorImage.load(b6);
-                    ByteBuffer byteBuffer= tensorImage.getBuffer();
-
-                    inputFeature0.loadBuffer(byteBuffer);
-
-                    // Runs model inference and gets result.
-                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
-                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-                    float[] arr=outputFeature0.getFloatArray();
-
-                    // Releases model resources if no longer used.
-                    model.close();
-
-                    if(isvalid(arr)==(int)isvalid(arr)) {
-                        textView6.setText(task[isvalid(arr)]);
-                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException e) {
-                    // TODO Handle the exception
-                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
-                }
+                recognizer(b6,textView6);
             }
         });
 
+        buttonSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(MainActivity.this, "Streak +1"+"\ud83d\udd25", Toast.LENGTH_SHORT).show();
+                button6.setEnabled(false);
+                button7.setEnabled(false);
+                button8.setEnabled(false);
+                button9.setEnabled(false);
+                button10.setEnabled(false);
+                buttonSub.setEnabled(false);
+                checkBox2.setEnabled(false);
+                checkBox3.setEnabled(false);
+                checkBox4.setEnabled(false);
+                checkBox5.setEnabled(false);
+                checkBox6.setEnabled(false);
+            }
+        });
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -385,6 +262,12 @@ public class MainActivity extends AppCompatActivity {
                 button8.setEnabled(true);
                 button9.setEnabled(true);
                 button10.setEnabled(true);
+                buttonSub.setEnabled(false);
+                checkBox2.setEnabled(false);
+                checkBox3.setEnabled(false);
+                checkBox4.setEnabled(false);
+                checkBox5.setEnabled(false);
+                checkBox6.setEnabled(false);
             }
         });
     }
@@ -401,6 +284,7 @@ public class MainActivity extends AppCompatActivity {
             b2= ThumbnailUtils.extractThumbnail(b2,dimension,dimension);
 
             imageView2.setImageBitmap(b2);
+            checkBox2.setEnabled(true);
 
         }
         if(requestCode==200 && resultCode==RESULT_OK)
@@ -411,6 +295,7 @@ public class MainActivity extends AppCompatActivity {
             b3= ThumbnailUtils.extractThumbnail(b3,dimension,dimension);
 
             imageView3.setImageBitmap(b3);
+            checkBox3.setEnabled(true);
 
         }
         if(requestCode==300 && resultCode==RESULT_OK)
@@ -421,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
             b4= ThumbnailUtils.extractThumbnail(b4,dimension,dimension);
 
             imageView4.setImageBitmap(b4);
+            checkBox4.setEnabled(true);
 
         }
         if(requestCode==400 && resultCode==RESULT_OK)
@@ -431,6 +317,7 @@ public class MainActivity extends AppCompatActivity {
             b5= ThumbnailUtils.extractThumbnail(b5,dimension,dimension);
 
             imageView5.setImageBitmap(b5);
+            checkBox5.setEnabled(true);
 
         }
         if(requestCode==500 && resultCode==RESULT_OK)
@@ -441,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
             b6= ThumbnailUtils.extractThumbnail(b6,dimension,dimension);
 
             imageView6.setImageBitmap(b6);
-
+            checkBox6.setEnabled(true);
         }
     }
 
@@ -455,5 +342,39 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return max;
+    }
+
+    public void recognizer(Bitmap bmp, TextView tv)
+    {
+        try {
+            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+
+            // Creates inputs for reference.
+            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+
+            TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
+            tensorImage.load(bmp);
+            ByteBuffer byteBuffer= tensorImage.getBuffer();
+
+            inputFeature0.loadBuffer(byteBuffer);
+
+            // Runs model inference and gets result.
+            ModelUnquant.Outputs outputs = model.process(inputFeature0);
+            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+            float[] arr=outputFeature0.getFloatArray();
+
+            // Releases model resources if no longer used.
+            model.close();
+
+            if(isvalid(arr)==(int)isvalid(arr)) {
+                tv.setText(task[isvalid(arr)]);
+                Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
+                buttonSub.setEnabled(true);
+            }
+        } catch (IOException e) {
+            // TODO Handle the exception
+            Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

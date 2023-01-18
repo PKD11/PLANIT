@@ -77,10 +77,8 @@ public class signup_reg extends AppCompatActivity {
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(signup_reg.this, "You have successfully registered!!", Toast.LENGTH_SHORT).show();
-                RegisterUser();
-
-
+              Toast.makeText(signup_reg.this, "A Small Step towards a Great cause"+"\\ud83c\\udf8a", Toast.LENGTH_SHORT).show();
+              RegisterUser();
             }
         });
     }
