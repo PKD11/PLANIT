@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -40,7 +41,8 @@ public class signup_reg extends AppCompatActivity {
     FirebaseFirestore dbroot;
     DatabaseReference db;
 
-    Button buttonSub, buttonImg;
+    Button buttonSub;
+    ImageButton buttonImg;
     EditText editText1, editText2, editText3, editText4, editText5;
     ImageView imageView;
     Bitmap bmp;
@@ -71,6 +73,7 @@ public class signup_reg extends AppCompatActivity {
                 Intent intent= new Intent(Intent.ACTION_GET_CONTENT);
                 intent.setType("image/*");
                 startActivityForResult(intent,200);
+                buttonImg.setVisibility(View.INVISIBLE);
             }
         });
 
