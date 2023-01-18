@@ -20,7 +20,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.planit.ml.ModelUnquant;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.support.image.TensorImage;
@@ -32,15 +41,20 @@ import java.nio.ByteBuffer;
 public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
-    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2, button;
-    ImageView imageView,imageView2, imageView3, imageView4, imageView5, imageView6;
+    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button6, button7, button8, button9, button10, button2,buttonSub;
+    ImageView ProfilePic,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
-    String[] task={"Planting","Garbage","Cleaning","Watering"};
+    FirebaseFirestore dbroot;
+    FirebaseAuth fAuth;
+    FirebaseFirestore fStore;
+    StorageReference storageReference;
+    Boolean doneToday;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+    dbroot=FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -49,26 +63,26 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter<String>adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, action);
         spinner.setAdapter(adapter);
 
-        checkBox2=findViewById(R.id.checkBox2); checkBox2.setEnabled(false);
-        checkBox3=findViewById(R.id.checkBox3); checkBox3.setEnabled(false);
-        checkBox4=findViewById(R.id.checkBox4); checkBox4.setEnabled(false);
-        checkBox5=findViewById(R.id.checkBox5); checkBox5.setEnabled(false);
-        checkBox6=findViewById(R.id.checkBox6); checkBox6.setEnabled(false);
+        checkBox2=findViewById(R.id.checkBox2);
+        checkBox3=findViewById(R.id.checkBox3);
+        checkBox4=findViewById(R.id.checkBox4);
+        checkBox5=findViewById(R.id.checkBox5);
+        checkBox6=findViewById(R.id.checkBox6);
 
-        imageView=findViewById(R.id.imageView);
+        ProfilePic=findViewById(R.id.ProfileImage);
         imageView2=findViewById(R.id.imageView2);
         imageView3=findViewById(R.id.imageView3);
         imageView4=findViewById(R.id.imageView4);
         imageView5=findViewById(R.id.imageView5);
         imageView6=findViewById(R.id.imageView6);
 
-        button=findViewById(R.id.button); button.setEnabled(false);
         button2=findViewById(R.id.button2);
         button6=findViewById(R.id.button6);
         button7=findViewById(R.id.button7);
         button8=findViewById(R.id.button8);
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
+        buttonSub=findViewById(R.id.buttonSubmit);
 
         textView2=findViewById(R.id.TextView2);
         textView3=findViewById(R.id.TextView3);
@@ -76,6 +90,28 @@ public class MainActivity extends AppCompatActivity {
         textView5=findViewById(R.id.TextView5);
         textView6=findViewById(R.id.TextView6);
 
+        String[] task={"Planting","Garbage","Cleaning","Watering"};
+
+        fAuth = FirebaseAuth.getInstance();
+        fStore = FirebaseFirestore.getInstance();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+
+        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+        profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(ProfilePic);
+            }
+        });
+        buttonSub.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              doneToday=true;
+              //check previous date and update accordingly;
+                Toast.makeText(MainActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
+            }
+        });
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,53 +207,177 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 b2=Bitmap.createScaledBitmap(b2, 224,224,true);
-                recognizer(b2,textView2);
+                try {
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+
+                    // Creates inputs for reference.
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
+                    tensorImage.load(b2);
+                    ByteBuffer byteBuffer= tensorImage.getBuffer();
+
+                    inputFeature0.loadBuffer(byteBuffer);
+
+                    // Runs model inference and gets result.
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
+                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                    float[] arr=outputFeature0.getFloatArray();
+
+                    // Releases model resources if no longer used.
+                    model.close();
+
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView2.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                        Toast.makeText(MainActivity.this, "Disapointment", Toast.LENGTH_SHORT).show();
+                } catch (IOException e) {
+                    // TODO Handle the exception
+                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         checkBox3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b3=Bitmap.createScaledBitmap(b3, 224,224,true);
-                recognizer(b3,textView3);
+                try {
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+
+                    // Creates inputs for reference.
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
+                    tensorImage.load(b3);
+                    ByteBuffer byteBuffer= tensorImage.getBuffer();
+
+                    inputFeature0.loadBuffer(byteBuffer);
+
+                    // Runs model inference and gets result.
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
+                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                    float[] arr=outputFeature0.getFloatArray();
+
+                    // Releases model resources if no longer used.
+                    model.close();
+
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView3.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    // TODO Handle the exception
+                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         checkBox4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b4=Bitmap.createScaledBitmap(b4, 224,224,true);
-                recognizer(b4,textView4);
+                try {
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+
+                    // Creates inputs for reference.
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
+                    tensorImage.load(b4);
+                    ByteBuffer byteBuffer= tensorImage.getBuffer();
+
+                    inputFeature0.loadBuffer(byteBuffer);
+
+                    // Runs model inference and gets result.
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
+                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                    float[] arr=outputFeature0.getFloatArray();
+
+                    // Releases model resources if no longer used.
+                    model.close();
+
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView4.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    // TODO Handle the exception
+                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         checkBox5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b5=Bitmap.createScaledBitmap(b5, 224,224,true);
-                recognizer(b5,textView5);
+                try {
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
+
+                    // Creates inputs for reference.
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
+                    tensorImage.load(b5);
+                    ByteBuffer byteBuffer= tensorImage.getBuffer();
+
+                    inputFeature0.loadBuffer(byteBuffer);
+
+                    // Runs model inference and gets result.
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
+                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                    float[] arr=outputFeature0.getFloatArray();
+
+                    // Releases model resources if no longer used.
+                    model.close();
+
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView5.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    // TODO Handle the exception
+                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         checkBox6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 b6=Bitmap.createScaledBitmap(b6, 224,224,true);
-                recognizer(b6,textView6);
-            }
-        });
+                try {
+                    ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Streak +1"+"\ud83d\udd25", Toast.LENGTH_SHORT).show();
-                button6.setEnabled(false);
-                button7.setEnabled(false);
-                button8.setEnabled(false);
-                button9.setEnabled(false);
-                button10.setEnabled(false);
-                button.setEnabled(false);
-                checkBox2.setEnabled(false);
-                checkBox3.setEnabled(false);
-                checkBox4.setEnabled(false);
-                checkBox5.setEnabled(false);
-                checkBox6.setEnabled(false);
+                    // Creates inputs for reference.
+                    TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
+
+                    TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
+                    tensorImage.load(b6);
+                    ByteBuffer byteBuffer= tensorImage.getBuffer();
+
+                    inputFeature0.loadBuffer(byteBuffer);
+
+                    // Runs model inference and gets result.
+                    ModelUnquant.Outputs outputs = model.process(inputFeature0);
+                    TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
+
+                    float[] arr=outputFeature0.getFloatArray();
+
+                    // Releases model resources if no longer used.
+                    model.close();
+
+                    if(isvalid(arr)==(int)isvalid(arr)) {
+                        textView6.setText(task[isvalid(arr)]);
+                        Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException e) {
+                    // TODO Handle the exception
+                    Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -230,12 +390,6 @@ public class MainActivity extends AppCompatActivity {
                 button8.setEnabled(true);
                 button9.setEnabled(true);
                 button10.setEnabled(true);
-                button.setEnabled(false);
-                checkBox2.setEnabled(false);
-                checkBox3.setEnabled(false);
-                checkBox4.setEnabled(false);
-                checkBox5.setEnabled(false);
-                checkBox6.setEnabled(false);
             }
         });
     }
@@ -252,7 +406,6 @@ public class MainActivity extends AppCompatActivity {
             b2= ThumbnailUtils.extractThumbnail(b2,dimension,dimension);
 
             imageView2.setImageBitmap(b2);
-            checkBox2.setEnabled(true);
 
         }
         if(requestCode==200 && resultCode==RESULT_OK)
@@ -263,7 +416,6 @@ public class MainActivity extends AppCompatActivity {
             b3= ThumbnailUtils.extractThumbnail(b3,dimension,dimension);
 
             imageView3.setImageBitmap(b3);
-            checkBox3.setEnabled(true);
 
         }
         if(requestCode==300 && resultCode==RESULT_OK)
@@ -274,7 +426,6 @@ public class MainActivity extends AppCompatActivity {
             b4= ThumbnailUtils.extractThumbnail(b4,dimension,dimension);
 
             imageView4.setImageBitmap(b4);
-            checkBox4.setEnabled(true);
 
         }
         if(requestCode==400 && resultCode==RESULT_OK)
@@ -285,7 +436,6 @@ public class MainActivity extends AppCompatActivity {
             b5= ThumbnailUtils.extractThumbnail(b5,dimension,dimension);
 
             imageView5.setImageBitmap(b5);
-            checkBox5.setEnabled(true);
 
         }
         if(requestCode==500 && resultCode==RESULT_OK)
@@ -296,7 +446,7 @@ public class MainActivity extends AppCompatActivity {
             b6= ThumbnailUtils.extractThumbnail(b6,dimension,dimension);
 
             imageView6.setImageBitmap(b6);
-            checkBox6.setEnabled(true);
+
         }
     }
 
@@ -310,39 +460,5 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return max;
-    }
-
-    public void recognizer(Bitmap bmp, TextView tv)
-    {
-        try {
-            ModelUnquant model = ModelUnquant.newInstance(getApplicationContext());
-
-            // Creates inputs for reference.
-            TensorBuffer inputFeature0 = TensorBuffer.createFixedSize(new int[]{1, 224, 224, 3}, DataType.FLOAT32);
-
-            TensorImage tensorImage= new TensorImage(DataType.FLOAT32);
-            tensorImage.load(bmp);
-            ByteBuffer byteBuffer= tensorImage.getBuffer();
-
-            inputFeature0.loadBuffer(byteBuffer);
-
-            // Runs model inference and gets result.
-            ModelUnquant.Outputs outputs = model.process(inputFeature0);
-            TensorBuffer outputFeature0 = outputs.getOutputFeature0AsTensorBuffer();
-
-            float[] arr=outputFeature0.getFloatArray();
-
-            // Releases model resources if no longer used.
-            model.close();
-
-            if(isvalid(arr)==(int)isvalid(arr)) {
-                tv.setText(task[isvalid(arr)]);
-                Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                button.setEnabled(true);
-            }
-        } catch (IOException e) {
-            // TODO Handle the exception
-            Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
-        }
     }
 }
