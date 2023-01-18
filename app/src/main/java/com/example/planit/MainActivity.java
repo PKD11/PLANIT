@@ -1,10 +1,6 @@
 package com.example.planit;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -51,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     StorageReference storageReference;
     Boolean doneToday;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     dbroot=FirebaseFirestore.getInstance();
