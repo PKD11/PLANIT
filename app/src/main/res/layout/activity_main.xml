@@ -106,14 +106,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.977" />
 
-    <CheckBox
+    <Button
         android:id="@+id/checkBox2"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:text="@string/verify"
         android:textStyle="bold"
-        android:background="#006400"
-        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.276"
@@ -274,19 +272,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.013"
         tools:srcCompat="@tools:sample/avatars" />
-
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:contentDescription="click"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/ProfileImage"
-        app:layout_constraintEnd_toEndOf="@+id/ProfileImage"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="@+id/ProfileImage"
-        app:layout_constraintTop_toTopOf="@+id/ProfileImage"
-        app:layout_constraintVertical_bias="1.0" />
 
     <ImageButton
         app:srcCompat="@android:drawable/ic_menu_camera"

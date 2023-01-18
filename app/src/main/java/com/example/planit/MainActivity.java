@@ -1,6 +1,10 @@
 package com.example.planit;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -18,10 +22,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.planit.ml.ModelUnquant;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,39 +38,34 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends AppCompatActivity {
 
     Spinner spinner;
-    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button2,buttonSub;
+    Button checkBox2, checkBox3, checkBox4, checkBox5, checkBox6, button2, buttonSub;
     ImageButton button6, button7, button8, button9, button10;
     ImageView ProfilePic,imageView2, imageView3, imageView4, imageView5, imageView6;
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
+
+    String[] task={"Planting","Garbage","Cleaning","Watering"};
+
     FirebaseFirestore dbroot;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     StorageReference storageReference;
     Boolean doneToday;
 
-    String[] task={"Planting","Garbage","Cleaning","Watering"};
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    dbroot=FirebaseFirestore.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        spinner.setOnItemSelectedListener(this);
-        String[] action = {"Profile","Task Board","Report Error","Logout"};
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, action);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        checkBox2=findViewById(R.id.checkBox2);
-        checkBox3=findViewById(R.id.checkBox3);
-        checkBox4=findViewById(R.id.checkBox4);
-        checkBox5=findViewById(R.id.checkBox5);
-        checkBox6=findViewById(R.id.checkBox6);
+        checkBox2=findViewById(R.id.checkBox2); checkBox2.setEnabled(false);
+        checkBox3=findViewById(R.id.checkBox3); checkBox3.setEnabled(false);
+        checkBox4=findViewById(R.id.checkBox4); checkBox4.setEnabled(false);
+        checkBox5=findViewById(R.id.checkBox5); checkBox5.setEnabled(false);
+        checkBox6=findViewById(R.id.checkBox6); checkBox6.setEnabled(false);
 
         ProfilePic=findViewById(R.id.ProfileImage);
         imageView2=findViewById(R.id.imageView2);
@@ -77,19 +74,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imageView5=findViewById(R.id.imageView5);
         imageView6=findViewById(R.id.imageView6);
 
+
         button2=findViewById(R.id.button2);
         button6=findViewById(R.id.button6);
         button7=findViewById(R.id.button7);
         button8=findViewById(R.id.button8);
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
-        buttonSub=findViewById(R.id.buttonSubmit);
+        buttonSub=findViewById(R.id.buttonSubmit); buttonSub.setEnabled(false);
 
         textView2=findViewById(R.id.TextView2);
         textView3=findViewById(R.id.TextView3);
         textView4=findViewById(R.id.TextView4);
         textView5=findViewById(R.id.TextView5);
         textView6=findViewById(R.id.TextView6);
+
+        String[] task={"Planting","Garbage","Cleaning","Watering"};
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -103,11 +103,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Picasso.get().load(uri).into(ProfilePic);
             }
         });
+
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              doneToday=true;
-              //check previous date and update accordingly;
+                doneToday=true;
+                //check previous date and update accordingly;
                 Toast.makeText(MainActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
             }
         });
@@ -255,6 +256,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 checkBox6.setEnabled(false);
             }
         });
+
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -272,6 +274,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 checkBox6.setEnabled(false);
             }
         });
+
     }
 
     @Override
@@ -379,24 +382,5 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
         }
     }
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        String func= adapterView.getItemAtPosition(i).toString();
-        switch (func) {
-            case "Task Board":
-                startActivity(new Intent(this, MainActivity.class));
-                break;
-            case "Profile":
-                startActivity(new Intent(this, Profile.class));
-                break;
-            case "Logout":
-                startActivity(new Intent(this, login_reg.class));
-                break;
-        }
-    }
 
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

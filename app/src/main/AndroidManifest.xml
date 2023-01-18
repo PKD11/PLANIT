@@ -19,6 +19,7 @@
         <activity
             android:name=".Profile"
             android:exported="false"
+            android:allowTaskReparenting="true"
             android:label="Profile Page \ud83d\udc64">
             <meta-data
                 android:name="android.app.lib_name"
@@ -27,6 +28,7 @@
         <activity
             android:name=".community"
             android:exported="false"
+            android:allowTaskReparenting="true"
             android:label="Community Forum \ud83d\udc65">
             <meta-data
                 android:name="android.app.lib_name"
@@ -67,7 +69,8 @@
             android:name=".MainActivity"
             android:allowTaskReparenting="true"
             android:exported="false"
-            android:label="Task Board \ud83d\udcdd">
+            android:parentActivityName=".community"
+            android:label="DashBoard \ud83d\udcdd">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

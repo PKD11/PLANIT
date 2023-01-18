@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,6 +28,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     StorageReference storageReference;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -51,8 +53,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         });
 
         spinner.setOnItemSelectedListener(this);
-        String[] action = {"Profile","Task Board","Report Error","Logout"};
-        ArrayAdapter<String> adapter=new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, action);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.community,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
     }
@@ -60,11 +61,12 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String func= adapterView.getItemAtPosition(i).toString();
-            if(func.equals("Task Board"))
+        Toast.makeText(this, func, Toast.LENGTH_SHORT).show();
+            if(func.equals("Dashboard"))
                 startActivity(new Intent(this, MainActivity.class));
-            else if(func.equals("Profile"))
+            if(func.equals("Profile"))
                 startActivity(new Intent(this, Profile.class));
-            else if(func.equals("Logout"))
+            if(func.equals("Logout"))
                 startActivity(new Intent(this, login_reg.class));
     }
 
