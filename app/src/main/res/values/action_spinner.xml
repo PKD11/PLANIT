@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="community">
-        <item>Profile</item>
-        <item>Dashboard</item>
         <item>Report Error</item>
+        <item>Dashboard</item>
+        <item>Profile</item>
         <item>Logout</item>
     </string-array>
     <string-array name="dashboard">

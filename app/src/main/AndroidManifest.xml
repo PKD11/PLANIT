@@ -19,7 +19,7 @@
         <activity
             android:name=".Profile"
             android:exported="false"
-            android:allowTaskReparenting="true"
+            android:parentActivityName=".community"
             android:label="Profile Page \ud83d\udc64">
             <meta-data
                 android:name="android.app.lib_name"
@@ -67,7 +67,6 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:allowTaskReparenting="true"
             android:exported="false"
             android:parentActivityName=".community"
             android:label="DashBoard \ud83d\udcdd">
