@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,18 +17,33 @@
         android:theme="@style/Theme.PLANIT"
         tools:targetApi="31">
         <activity
+            android:name=".friendList"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".profile_view"
+            android:exported="false"
+            android:parentActivityName=".community">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Profile"
             android:exported="false"
-            android:parentActivityName=".community"
-            android:label="Profile Page \ud83d\udc64">
+            android:label="Profile Page \ud83d\udc64"
+            android:parentActivityName=".community">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".community"
-            android:exported="false"
             android:allowTaskReparenting="true"
+            android:exported="false"
             android:label="Community Forum \ud83d\udc65">
             <meta-data
                 android:name="android.app.lib_name"
@@ -67,8 +82,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:parentActivityName=".community"
-            android:label="DashBoard \ud83d\udcdd">
+            android:label="DashBoard \ud83d\udcdd"
+            android:parentActivityName=".community">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

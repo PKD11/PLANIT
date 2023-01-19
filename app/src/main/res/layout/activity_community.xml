@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:padding="6dp"
     tools:context=".community">
 
@@ -386,7 +387,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="20dp"
-        android:hint="streak"
+        android:hint="@string/streaK"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
 
@@ -401,7 +402,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="20dp"
-        android:hint="streak"
+        android:hint="@string/streaK"
         app:layout_constraintBottom_toTopOf="@+id/dividerh2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.932"
@@ -415,7 +416,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:textSize="20dp"
-        android:hint="streak"
+        android:hint="@string/streaK"
         app:layout_constraintBottom_toTopOf="@+id/dividerh3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.935"
@@ -492,5 +493,6 @@
         app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

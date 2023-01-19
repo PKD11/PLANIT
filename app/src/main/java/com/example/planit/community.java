@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     ImageView pfp2,pfp3,pfp4,pfp5;
     TextView name2,name3,name4,name5;
     TextView streak2,streak3,streak4,streak5;
+    ImageButton plus;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -63,7 +65,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         pfp4=findViewById(R.id.pfpimage4);
         pfp5=findViewById(R.id.pfpimage5);
 
-        name2=findViewById(R.id.textname1);
+        name2=findViewById(R.id.textname1); name2.setClickable(true);
         name3=findViewById(R.id.textname2);
         name4=findViewById(R.id.textname3);
         name5=findViewById(R.id.textname4);
@@ -74,8 +76,6 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         streak5=findViewById(R.id.streak5);
 
 
-
-
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
@@ -84,111 +84,10 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
 
-        StorageReference profileRef2 = storageReference.child("users/"+user2+"/profile.jpg");
-        profileRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(pfp2);
-            }
-        });
-
-        StorageReference profileRef3 = storageReference.child("users/"+user3+"/profile.jpg");
-        profileRef3.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(pfp3);
-            }
-        });
-
-        StorageReference profileRef4 = storageReference.child("users/"+user4+"/profile.jpg");
-        profileRef4.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(pfp4);
-            }
-        });
-        StorageReference profileRef5 = storageReference.child("users/"+user5+"/profile.jpg");
-        profileRef5.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(pfp5);
-            }
-        });
-
-
-    documentReference = fStore.collection("users").document(user2);
-    documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-        @Override
-        public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-            if (documentSnapshot.exists()) {
-
-                name2.setText(documentSnapshot.getString("name"));
-
-                Object str = documentSnapshot.get("streak");
-                streak2.setText(str.toString() + " \ud83d\udd25");
-
-            } else {
-                Log.d("tag", "onEvent: Document do not exists" + user2);
-            }
-        }
-    });
-
-
-        documentReference = fStore.collection("users").document(user3);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
-
-                    name3.setText(documentSnapshot.getString("name"));
-
-                    Object str = documentSnapshot.get("streak");
-                    streak3.setText(str.toString() + " \ud83d\udd25");
-
-                } else {
-                    Log.d("tag", "onEvent: Document do not exists" + user3);
-                }
-            }
-        });
-
-
-        documentReference = fStore.collection("users").document(user4);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
-
-                    name4.setText(documentSnapshot.getString("name"));
-
-                    Object str = documentSnapshot.get("streak");
-                    streak4.setText(str.toString() + " \ud83d\udd25");
-
-                } else {
-                    Log.d("tag", "onEvent: Document do not exists" + user4);
-                }
-            }
-        });
-
-
-        documentReference = fStore.collection("users").document(user5);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
-
-                    name5.setText(documentSnapshot.getString("name"));
-
-                    Object str = documentSnapshot.get("streak");
-                    streak5.setText(str.toString() + " \ud83d\udd25");
-
-                } else {
-                    Log.d("tag", "onEvent: Document do not exists" + user2);
-                }
-            }
-        });
-
-
-
+        fetch_user(user2,name2,streak2,pfp2);
+        fetch_user(user3,name3,streak3,pfp3);
+        fetch_user(user4,name4,streak4,pfp4);
+        fetch_user(user5,name5,streak5,pfp5);
 
 
         spinner.setOnItemSelectedListener(this);
@@ -207,9 +106,39 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
                 startActivity(new Intent(this, Profile.class));
             if(func.equals("Logout"))
                 startActivity(new Intent(this, login_reg.class));
+            if(func.equals("Report Error")){}
+//                startActivity(new Intent(this, profile_x.class));
     }
 
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
+    }
+
+    public void fetch_user(String user, TextView name, TextView streak, ImageView pfp)
+    {
+        StorageReference profileRef2 = storageReference.child("users/"+user2+"/profile.jpg");
+        profileRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Picasso.get().load(uri).into(pfp);
+            }
+        });
+
+        documentReference = fStore.collection("users").document(user);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if (documentSnapshot.exists()) {
+
+                    name.setText(documentSnapshot.getString("name"));
+
+                    Object str = documentSnapshot.get("streak");
+                    streak.setText(str.toString() + " \ud83d\udd25");
+
+                } else {
+                    Log.d("tag", "onEvent: Document do not exists" + user);
+                }
+            }
+        });
     }
 }

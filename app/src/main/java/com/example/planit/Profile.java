@@ -149,7 +149,8 @@ public class Profile extends AppCompatActivity {
                     //convert streak to string from integer
 
 //                    streak.setText("0");
-                }else {
+                }
+                else {
                     Log.d("tag", "onEvent: Document do not exists"+userId);
 //                    Log.d("tag", "onEvent: Document do not exists");
                 }
@@ -183,8 +184,6 @@ public class Profile extends AppCompatActivity {
         });
 
     }
-
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
