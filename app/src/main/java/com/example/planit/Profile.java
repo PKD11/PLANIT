@@ -133,8 +133,8 @@ public class Profile extends AppCompatActivity {
                     address.setText(documentSnapshot.getString("location"));
                     Object str=documentSnapshot.get("streak");
                     streak.setText(str.toString()+ " \ud83d\udd25");
-                    streak.setText( documentSnapshot.get("streak").toString()+" \ud83d\udd25");
-//                    documentSnapshot.get
+//                    streak.setText( documentSnapshot.get("streak").toString()+" \ud83d\udd25");
+
                     //convert streak to string from integer
 
 //                    streak.setText("0");
@@ -144,7 +144,6 @@ public class Profile extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void UpdateUser()
