@@ -48,6 +48,7 @@ public class signup_reg extends AppCompatActivity {
     Bitmap bmp;
     StorageReference storageReference;
     Uri uri;
+    String userid;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +99,13 @@ public class signup_reg extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    User user=new User(name,age,email,loc);
+
+                     userid=mAuth.getCurrentUser().getUid();
+
+                    User user=new User(userid,name,age,email,loc);
                     dbroot= FirebaseFirestore.getInstance();
 //
-                    dbroot.collection("users").document(email).set(user);
+                    dbroot.collection("users").document(userid).set(user);
 
                     Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
                                     uploadImageToFirebase(uri);
@@ -146,7 +150,7 @@ public class signup_reg extends AppCompatActivity {
     }
     private void uploadImageToFirebase(Uri imageUri) {
         // uplaod image to firebase storage
-        final StorageReference fileRef = storageReference.child("users/"+mAuth.getCurrentUser().getUid()+"/profile.jpg");
+        final StorageReference fileRef = storageReference.child("users/"+userid+"/profile.jpg");
         fileRef.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

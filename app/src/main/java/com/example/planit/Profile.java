@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -25,19 +26,24 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
+import java.io.IOException;import com.google.firebase.firestore.DocumentSnapshot;
 
 public class Profile extends AppCompatActivity {
 
     ImageView imageView;
-    TextView textView;
-    EditText editText1,editText2,editText3;
+    TextView streak;
+    EditText fullname,email,address;
     ImageButton imageButton1,imageButton2,imageButton3,imageButton4,imageButton5;
     Bitmap bmp;
     Uri uri;
@@ -47,6 +53,9 @@ public class Profile extends AppCompatActivity {
     FirebaseFirestore fStore;
     StorageReference storageReference;
 
+    FirebaseUser user;
+    String userId;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +63,13 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
 
         imageView=findViewById(R.id.imageView);
-        textView=findViewById(R.id.textView);
-        editText1=findViewById(R.id.editText1); editText1.setEnabled(false);
-        editText2=findViewById(R.id.editText2); editText2.setEnabled(false);
-        editText3=findViewById(R.id.editText3); editText3.setEnabled(false);
+        streak=findViewById(R.id.textView);
+        fullname=findViewById(R.id.editText1);
+        fullname.setEnabled(false);
+        email=findViewById(R.id.editText2);
+        email.setEnabled(false);
+        address=findViewById(R.id.editText3);
+        address.setEnabled(false);
         imageButton1=findViewById(R.id.imageButton1); imageButton1.setEnabled(false);
         imageButton2=findViewById(R.id.imageButton2);
         imageButton3=findViewById(R.id.imageButton3);
@@ -76,6 +88,8 @@ public class Profile extends AppCompatActivity {
                 Picasso.get().load(uri).into(imageView);
             }
         });
+        userId = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
 
         imageButton2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,9 +98,9 @@ public class Profile extends AppCompatActivity {
                 imageButton1.setEnabled(true);
                 imageButton5.setVisibility(View.VISIBLE);
                 imageButton5.setEnabled(true);
-                editText1.setEnabled(true);
-                editText2.setEnabled(true);
-                editText3.setEnabled(true);
+                fullname.setEnabled(true);
+                email.setEnabled(true);
+                address.setEnabled(true);
             }
         });
 
@@ -103,25 +117,49 @@ public class Profile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Profile.this, "Profile Updated", Toast.LENGTH_SHORT).show();
-                UpdateUser();
+//                UpdateUser();
                 imageButton1.setVisibility(View.INVISIBLE);
                 imageButton1.setEnabled(false);
                 imageButton5.setVisibility(View.INVISIBLE);
                 imageButton5.setEnabled(false);
-                editText1.setEnabled(false);
-                editText2.setEnabled(false);
-                editText3.setEnabled(false);
+                fullname.setEnabled(false);
+                email.setEnabled(false);
+                address.setEnabled(false);
             }
         });
+
+
+        DocumentReference documentReference = fStore.collection("users").document(userId);
+        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot.exists()){
+                    fullname.setText(documentSnapshot.getString("name"));
+                    email.setText(documentSnapshot.getString("email"));
+                    address.setText(documentSnapshot.getString("location"));
+                    streak.setText( documentSnapshot.get("streak").toString());
+//                    documentSnapshot.get
+                    //convert streak to string from integer
+
+//                    streak.setText("0");
+                }else {
+                    Log.d("tag", "onEvent: Document do not exists"+userId);
+//                    Log.d("tag", "onEvent: Document do not exists");
+                }
+            }
+        });
+
     }
 
-    private void UpdateUser()
-    {
-        String name=editText1.getText().toString();
-        String email=editText2.getText().toString();
-        String loc=editText3.getText().toString();
+//    private void UpdateUser()
+//    {
+//        String name=fullname.getText().toString();
+//        String email= email.getText().toString();
+//        String loc=address.getText().toString();
+//
+//    }
 
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
