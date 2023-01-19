@@ -260,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
                     button8.setEnabled(false);
                     button9.setEnabled(false);
                     button10.setEnabled(false);
-//                    buttonSub.setEnabled(false);
+                    buttonSub.setEnabled(false);
                     buttonSub.setClickable(false);
                     checkBox2.setEnabled(false);
                     checkBox3.setEnabled(false);
@@ -285,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
                 button8.setEnabled(true);
                 button9.setEnabled(true);
                 button10.setEnabled(true);
-//                buttonSub.setEnabled(false);
+                buttonSub.setEnabled(false);
                 buttonSub.setClickable(false);
                 checkBox2.setEnabled(false);
                 checkBox3.setEnabled(false);

@@ -27,7 +27,7 @@
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:gravity="center_vertical"
-
+        android:textColor="#018C01"
         android:hint="name"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/dividerh1"
@@ -123,7 +123,7 @@
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:gravity="center_vertical"
-
+        android:textColor="#018C01"
         android:hint="name"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/dividerh2"
@@ -206,7 +206,7 @@
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:gravity="center_vertical"
-
+        android:textColor="#018C01"
         android:hint="name"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/dividerh3"
@@ -288,7 +288,7 @@
         android:layout_width="160dp"
         android:layout_height="44dp"
         android:gravity="center_vertical"
-
+        android:textColor="#018C01"
         android:hint="name"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/dividerh4"
@@ -385,7 +385,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-
+        android:textSize="20dp"
         android:hint="streak"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -400,7 +400,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-
+        android:textSize="20dp"
         android:hint="streak"
         app:layout_constraintBottom_toTopOf="@+id/dividerh2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -414,7 +414,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-
+        android:textSize="20dp"
         android:hint="streak"
         app:layout_constraintBottom_toTopOf="@+id/dividerh3"
         app:layout_constraintEnd_toEndOf="parent"
@@ -428,7 +428,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="end"
-
+        android:textSize="20dp"
         android:hint="steak"
         app:layout_constraintBottom_toTopOf="@+id/dividerh4"
         app:layout_constraintEnd_toEndOf="parent"
@@ -444,10 +444,10 @@
         android:backgroundTint="#006400"
         app:layout_constraintBottom_toTopOf="@+id/dividerh1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerh"
-        app:layout_constraintVertical_bias="0.19"
+        app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
@@ -458,10 +458,10 @@
         android:backgroundTint="#006400"
         app:layout_constraintBottom_toTopOf="@+id/dividerh2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerh1"
-        app:layout_constraintVertical_bias="0.162"
+        app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
@@ -472,10 +472,10 @@
         android:backgroundTint="#006400"
         app:layout_constraintBottom_toTopOf="@+id/dividerh3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerh2"
-        app:layout_constraintVertical_bias="0.169"
+        app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
@@ -486,10 +486,10 @@
         android:backgroundTint="#006400"
         app:layout_constraintBottom_toTopOf="@+id/dividerh4"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dividerh3"
-        app:layout_constraintVertical_bias="0.15"
+        app:layout_constraintVertical_bias="0.2"
         app:srcCompat="@android:drawable/ic_menu_add"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 

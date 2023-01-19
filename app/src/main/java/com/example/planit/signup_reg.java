@@ -81,7 +81,7 @@ public class signup_reg extends AppCompatActivity {
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              Toast.makeText(signup_reg.this, "A Small Step towards a Great cause"+"\\ud83c\\udf8a", Toast.LENGTH_SHORT).show();
+              Toast.makeText(signup_reg.this, "A Small Step towards a Great cause", Toast.LENGTH_SHORT).show();
               RegisterUser();
             }
         });
@@ -107,13 +107,13 @@ public class signup_reg extends AppCompatActivity {
 //
                     dbroot.collection("users").document(userid).set(user);
 
-                    Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(signup_reg.this, "User Created", Toast.LENGTH_SHORT).show();
                                     uploadImageToFirebase(uri);
 
 
                     if(task.isSuccessful()){
                                 Toast.makeText(signup_reg.this, "You have successfully registered!!", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(signup_reg.this,MainActivity.class);
+                                Intent intent=new Intent(signup_reg.this,community.class);
                                 startActivity(intent);
                             }
                             else{
@@ -158,7 +158,6 @@ public class signup_reg extends AppCompatActivity {
                     @Override
                     public void onSuccess(Uri uri) {
                         // image uploaded to firebase storage toast
-                        Toast.makeText(signup_reg.this, "Image Uploaded!!", Toast.LENGTH_SHORT).show();
 //                        Picasso.get().load(uri).into(imageView);
                     }
                 });
