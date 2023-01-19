@@ -12,19 +12,14 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -37,7 +32,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;import com.google.firebase.firestore.DocumentSnapshot;
+import java.io.IOException;
 
 public class Profile extends AppCompatActivity {
 
@@ -136,6 +131,8 @@ public class Profile extends AppCompatActivity {
                     fullname.setText(documentSnapshot.getString("name"));
                     email.setText(documentSnapshot.getString("email"));
                     address.setText(documentSnapshot.getString("location"));
+                    Object str=documentSnapshot.get("streak");
+                    streak.setText(str.toString()+ " \ud83d\udd25");
                     streak.setText( documentSnapshot.get("streak").toString()+" \ud83d\udd25");
 //                    documentSnapshot.get
                     //convert streak to string from integer

@@ -12,6 +12,7 @@ import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,7 +27,13 @@ import com.example.planit.ml.ModelUnquant;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -55,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
     StorageReference storageReference;
     Boolean doneToday=false;
     Boolean verified=false;
+    FirebaseUser user;
+    String userId;
+    Integer currentStreak;
+    String streak;
+
+    DocumentReference documentReference;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -82,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
         button8=findViewById(R.id.button8);
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
-        buttonSub=findViewById(R.id.buttonSubmit); buttonSub.setEnabled(false);
+        buttonSub=findViewById(R.id.buttonSubmit);
+//        buttonSub.setEnabled(false);
+        buttonSub.setClickable(false);
 
         textView2=findViewById(R.id.TextView2);
         textView3=findViewById(R.id.TextView3);
@@ -95,6 +110,8 @@ public class MainActivity extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        userId = fAuth.getCurrentUser().getUid();
+        user = fAuth.getCurrentUser();
 
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
@@ -105,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        documentReference = fStore.collection("users").document(userId);
 
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -235,23 +253,24 @@ public class MainActivity extends AppCompatActivity {
 
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
+//            if(buttonSub.)
             public void onClick(View view) {
 
                 if(verified) {
-                    Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25", Toast.LENGTH_SHORT).show();
                     button6.setEnabled(false);
                     button7.setEnabled(false);
                     button8.setEnabled(false);
                     button9.setEnabled(false);
                     button10.setEnabled(false);
-                    buttonSub.setEnabled(false);
+//                    buttonSub.setEnabled(false);
+                    buttonSub.setClickable(false);
                     checkBox2.setEnabled(false);
                     checkBox3.setEnabled(false);
                     checkBox4.setEnabled(false);
                     checkBox5.setEnabled(false);
                     checkBox6.setEnabled(false);
                     doneToday = true;
-
+                    updateStreak();
                 }
                 else{
                     Toast.makeText(MainActivity.this, "Please verify all the images", Toast.LENGTH_SHORT).show();
@@ -268,7 +287,8 @@ public class MainActivity extends AppCompatActivity {
                 button8.setEnabled(true);
                 button9.setEnabled(true);
                 button10.setEnabled(true);
-                buttonSub.setEnabled(false);
+//                buttonSub.setEnabled(false);
+                buttonSub.setClickable(false);
                 checkBox2.setEnabled(false);
                 checkBox3.setEnabled(false);
                 checkBox4.setEnabled(false);
@@ -377,13 +397,51 @@ public class MainActivity extends AppCompatActivity {
             if(isvalid(arr)==(int)isvalid(arr)) {
                 tv.setText(task[isvalid(arr)]);
                 Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
-                buttonSub.setEnabled(true);
+//                buttonSub.setEnabled(true);
+                buttonSub.setClickable(true);
                 verified=true;
+
             }
         } catch (IOException e) {
             // TODO Handle the exception
             Toast.makeText(MainActivity.this, "This is not a registered task?!", Toast.LENGTH_SHORT).show();
         }
+    }
+    public void updateStreak(){
+        Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25", Toast.LENGTH_SHORT).show();
+
+        documentReference.update("streak", FieldValue.increment(1));
+
+//        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
+//                if(documentSnapshot.exists()){
+//                    Object str=documentSnapshot.get("streak");
+//                    streak=str.toString();
+//                    Log.d("streak",streak);
+//                    Toast.makeText(MainActivity.this, "steak is " + streak, Toast.LENGTH_SHORT).show();
+//                     currentStreak = Integer.parseInt(streak);
+//                     currentStreak++;
+//                    Log.d("tag", "updatedStreak: "+currentStreak);
+//                    documentReference.update("streak", currentStreak);
+//
+////                    documentReference.update("streak", String.valueOf(currentStreak));
+//                }else {
+//                    Log.d("tag", "onEvent: Document do not exists"+userId);
+////                    Log.d("tag", "onEvent: Document do not exists");
+//                }
+//            }
+//        });
+//        String streak = String.valueOf(currentStreak);
+//        Log.d("tag", "updateStreak: "+streak);
+//        documentReference.update("streak",streak);
+//                            currentStreak++;
+//        Log.d("tag", "updateStreak: "+currentStreak);
+//        Log.d("tag", "updatedStreak: "+currentStreak);
+
+//        Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25"+ currentStreak, Toast.LENGTH_SHORT).show();
+
+
     }
 
 }

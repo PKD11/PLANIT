@@ -1,5 +1,7 @@
 package com.example.planit;
 
+import java.util.Date;
+
 public class User {
     public String userid;
     public String name;
@@ -9,6 +11,7 @@ public class User {
     //streak
     public Integer streak;
     public Integer longestStreak;
+    public Date lastStreakDate;
 
     public User(String userid, String name, Integer age, String email, String location) {
         this.userid = userid;
@@ -18,6 +21,7 @@ public class User {
         this.location = location;
         this.streak = 2;
         this.longestStreak = 6;
+        this.lastStreakDate = new Date();
 
     }
 
