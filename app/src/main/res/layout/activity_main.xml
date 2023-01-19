@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="6dp"
     tools:context=".MainActivity">
 
     <ImageView
@@ -11,7 +12,7 @@
         android:layout_width="100dp"
         android:layout_height="88dp"
         android:contentDescription="@string/streak"
-        android:padding="3dp"
+        android:padding="1dp"
         android:background="#018C01"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -263,7 +264,7 @@
         android:layout_width="68dp"
         android:layout_height="68dp"
         android:contentDescription="@string/pfp"
-        android:padding="5dp"
+        android:padding="2dp"
         android:background="#018C01"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

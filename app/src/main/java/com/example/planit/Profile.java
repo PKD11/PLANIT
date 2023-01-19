@@ -39,7 +39,7 @@ public class Profile extends AppCompatActivity {
     ImageView imageView;
     TextView streak;
     EditText fullname,email,address;
-    ImageButton imageButton1,editButton,imageButton3,imageButton4,imageButton5;
+    ImageButton imageButton1,editButton,imageButton3,imageButton4,imageButton5,imageButton6;
     Bitmap bmp;
     Uri uri;
 
@@ -70,6 +70,7 @@ public class Profile extends AppCompatActivity {
         imageButton3=findViewById(R.id.imageButton3);
         imageButton4=findViewById(R.id.imageButton4);
         imageButton5=findViewById(R.id.imageButton5);imageButton5.setEnabled(false);
+        imageButton6=findViewById(R.id.imageButton6);imageButton6.setEnabled(false);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -93,6 +94,8 @@ public class Profile extends AppCompatActivity {
                 imageButton1.setEnabled(true);
                 imageButton5.setVisibility(View.VISIBLE);
                 imageButton5.setEnabled(true);
+                imageButton6.setVisibility(View.VISIBLE);
+                imageButton6.setEnabled(true);
                 fullname.setEnabled(true);
                 email.setEnabled(true);
                 address.setEnabled(true);
@@ -116,14 +119,22 @@ public class Profile extends AppCompatActivity {
                 imageButton1.setEnabled(false);
                 imageButton5.setVisibility(View.INVISIBLE);
                 imageButton5.setEnabled(false);
+                imageButton6.setVisibility(View.INVISIBLE);
+                imageButton6.setEnabled(false);
                 fullname.setEnabled(false);
                 email.setEnabled(false);
                 address.setEnabled(false);
             }
         });
+        imageButton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Profile.this, Profile.class));
+            }
+        });
 
 
-         documentReference = fStore.collection("users").document(userId);
+        documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -133,8 +144,8 @@ public class Profile extends AppCompatActivity {
                     address.setText(documentSnapshot.getString("location"));
                     Object str=documentSnapshot.get("streak");
                     streak.setText(str.toString()+ " \ud83d\udd25");
-                    streak.setText( documentSnapshot.get("streak").toString()+" \ud83d\udd25");
-//                    documentSnapshot.get
+//                    streak.setText( documentSnapshot.get("streak").toString()+" \ud83d\udd25");
+
                     //convert streak to string from integer
 
 //                    streak.setText("0");
@@ -144,7 +155,6 @@ public class Profile extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void UpdateUser()

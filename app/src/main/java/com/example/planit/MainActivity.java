@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView2, textView3, textView4, textView5, textView6;
     Bitmap b1,b2,b3,b4,b5,b6;
 
-    String[] task={"Planting","Garbage","Cleaning","Watering"};
+    String[] task={"Planting","Cleaning"};
 
     FirebaseFirestore dbroot;
     FirebaseAuth fAuth;
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         button9=findViewById(R.id.button9);
         button10=findViewById(R.id.button10);
         buttonSub=findViewById(R.id.buttonSubmit);
-//        buttonSub.setEnabled(false);
+//      buttonSub.setEnabled(false);
         buttonSub.setClickable(false);
 
         textView2=findViewById(R.id.TextView2);
@@ -104,8 +104,6 @@ public class MainActivity extends AppCompatActivity {
         textView4=findViewById(R.id.TextView4);
         textView5=findViewById(R.id.TextView5);
         textView6=findViewById(R.id.TextView6);
-
-        String[] task={"Planting","Garbage","Cleaning","Watering"};
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
@@ -273,7 +271,7 @@ public class MainActivity extends AppCompatActivity {
                     updateStreak();
                 }
                 else{
-                    Toast.makeText(MainActivity.this, "Please verify all the images", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Please verify the images", Toast.LENGTH_SHORT).show();
                 }
             }
         });
