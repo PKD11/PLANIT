@@ -44,7 +44,7 @@ public class Profile extends AppCompatActivity {
     ImageView imageView;
     TextView streak;
     EditText fullname,email,address;
-    ImageButton imageButton1,imageButton2,imageButton3,imageButton4,imageButton5;
+    ImageButton imageButton1,editButton,imageButton3,imageButton4,imageButton5;
     Bitmap bmp;
     Uri uri;
 
@@ -52,7 +52,7 @@ public class Profile extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     StorageReference storageReference;
-
+    DocumentReference documentReference;
     FirebaseUser user;
     String userId;
 
@@ -71,7 +71,7 @@ public class Profile extends AppCompatActivity {
         address=findViewById(R.id.editText3);
         address.setEnabled(false);
         imageButton1=findViewById(R.id.imageButton1); imageButton1.setEnabled(false);
-        imageButton2=findViewById(R.id.imageButton2);
+        editButton=findViewById(R.id.imageButton2);
         imageButton3=findViewById(R.id.imageButton3);
         imageButton4=findViewById(R.id.imageButton4);
         imageButton5=findViewById(R.id.imageButton5);imageButton5.setEnabled(false);
@@ -91,7 +91,7 @@ public class Profile extends AppCompatActivity {
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
 
-        imageButton2.setOnClickListener(new View.OnClickListener() {
+        editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 imageButton1.setVisibility(View.VISIBLE);
@@ -116,8 +116,7 @@ public class Profile extends AppCompatActivity {
         imageButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Profile.this, "Profile Updated", Toast.LENGTH_SHORT).show();
-//                UpdateUser();
+                UpdateUser();
                 imageButton1.setVisibility(View.INVISIBLE);
                 imageButton1.setEnabled(false);
                 imageButton5.setVisibility(View.INVISIBLE);
@@ -129,7 +128,7 @@ public class Profile extends AppCompatActivity {
         });
 
 
-        DocumentReference documentReference = fStore.collection("users").document(userId);
+         documentReference = fStore.collection("users").document(userId);
         documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
@@ -137,7 +136,7 @@ public class Profile extends AppCompatActivity {
                     fullname.setText(documentSnapshot.getString("name"));
                     email.setText(documentSnapshot.getString("email"));
                     address.setText(documentSnapshot.getString("location"));
-                    streak.setText( documentSnapshot.get("streak").toString());
+                    streak.setText( documentSnapshot.get("streak").toString()+" \ud83d\udd25");
 //                    documentSnapshot.get
                     //convert streak to string from integer
 
@@ -151,13 +150,32 @@ public class Profile extends AppCompatActivity {
 
     }
 
-//    private void UpdateUser()
-//    {
-//        String name=fullname.getText().toString();
-//        String email= email.getText().toString();
-//        String loc=address.getText().toString();
-//
-//    }
+    private void UpdateUser()
+    {
+        String updatedname=fullname.getText().toString();
+        String updatedemail= email.getText().toString();
+        String updatedloc=address.getText().toString();
+        //update user info
+        user.updateEmail(updatedemail).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(Profile.this, "Email Updated", Toast.LENGTH_SHORT).show();
+
+                documentReference.update("email",updatedemail);
+                documentReference.update("name",updatedname);
+                documentReference.update("location",updatedloc);
+                Toast.makeText(Profile.this, "Profile Updated", Toast.LENGTH_SHORT).show();
+
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+
+                Toast.makeText(Profile.this, "Email Update Failed due to" +e.toString() , Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
 
 

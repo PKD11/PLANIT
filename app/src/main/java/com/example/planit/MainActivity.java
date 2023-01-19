@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     StorageReference storageReference;
-    Boolean doneToday;
+    Boolean doneToday=false;
+    Boolean verified=false;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -104,14 +105,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonSub.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                doneToday=true;
-                //check previous date and update accordingly;
-                Toast.makeText(MainActivity.this, "Submitted", Toast.LENGTH_SHORT).show();
-            }
-        });
+
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,18 +236,26 @@ public class MainActivity extends AppCompatActivity {
         buttonSub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Streak +1"+"\ud83d\udd25", Toast.LENGTH_SHORT).show();
-                button6.setEnabled(false);
-                button7.setEnabled(false);
-                button8.setEnabled(false);
-                button9.setEnabled(false);
-                button10.setEnabled(false);
-                buttonSub.setEnabled(false);
-                checkBox2.setEnabled(false);
-                checkBox3.setEnabled(false);
-                checkBox4.setEnabled(false);
-                checkBox5.setEnabled(false);
-                checkBox6.setEnabled(false);
+
+                if(verified) {
+                    Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25", Toast.LENGTH_SHORT).show();
+                    button6.setEnabled(false);
+                    button7.setEnabled(false);
+                    button8.setEnabled(false);
+                    button9.setEnabled(false);
+                    button10.setEnabled(false);
+                    buttonSub.setEnabled(false);
+                    checkBox2.setEnabled(false);
+                    checkBox3.setEnabled(false);
+                    checkBox4.setEnabled(false);
+                    checkBox5.setEnabled(false);
+                    checkBox6.setEnabled(false);
+                    doneToday = true;
+
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Please verify all the images", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -376,6 +378,7 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(task[isvalid(arr)]);
                 Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
                 buttonSub.setEnabled(true);
+                verified=true;
             }
         } catch (IOException e) {
             // TODO Handle the exception
