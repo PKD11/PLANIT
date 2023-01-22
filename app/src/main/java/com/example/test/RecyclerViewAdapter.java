@@ -61,12 +61,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
     private class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvItem;
+        TextView name;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvItem = itemView.findViewById(R.id.tvname);
+            name = itemView.findViewById(R.id.name);
         }
     }
 
@@ -88,7 +88,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     private void populateItemRows(ItemViewHolder viewHolder, int position) {
 
         String item = mItemList.get(position);
-        viewHolder.tvItem.setText(item);
+        viewHolder.name.setText(item);
 
     }
 
