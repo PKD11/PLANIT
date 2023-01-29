@@ -6,9 +6,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +23,8 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class profile_view extends AppCompatActivity {
 
@@ -83,6 +87,13 @@ public class profile_view extends AppCompatActivity {
                     Log.d("tag", "onEvent: Document do not exists"+userId);
 //                    Log.d("tag", "onEvent: Document do not exists");
                 }
+            }
+        });
+
+        imageButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(profile_view.this, "Request Sent \ud83d\udc8c", Toast.LENGTH_SHORT).show();
             }
         });
     }

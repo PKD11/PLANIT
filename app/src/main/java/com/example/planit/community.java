@@ -2,12 +2,8 @@ package com.example.planit;
 
 import static android.content.ContentValues.TAG;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -15,11 +11,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,14 +39,10 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class community extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class community extends AppCompatActivity implements AdapterView.OnItemSelectedListener,rcViewClick {
 
     Spinner spinner;
     ImageView imageViewreg;
-    ImageView pfp2,pfp3,pfp4,pfp5;
-    TextView name2,name3,name4,name5;
-    TextView streak2,streak3,streak4,streak5;
-    ImageButton plus;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -58,50 +54,17 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     ArrayList<User> userList;
 
 
-    String user2="8YjvylJLtMggw3DntAJzlUQ0c2C3";
-    String user3="9sMzX5dKAVNR8Frr9i9tg94OAD32";
-    String user4="TD3fC84GTbaDk0wdWTXGwyNZpts2";
-    String user5="aB0J9KKLRIhOHx1Z3tV3YqjllUz2";
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_community);
 
-        spinner=findViewById(R.id.spinner);
         imageViewreg=findViewById(R.id.imageViewreg);
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
-        usersc = fStore.collection("users");
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        userList = new ArrayList<>();
-        recyclerViewAdapter = new RecyclerViewAdapter(this, userList);
-        recyclerView.setAdapter(recyclerViewAdapter);
-//        name2.setClickable(true);
-
-
-//        pfp2=findViewById(R.id.pfpimage2);
-//        pfp3=findViewById(R.id.pfpimage3);
-//        pfp4=findViewById(R.id.pfpimage4);
-//        pfp5=findViewById(R.id.pfpimage5);
-//
-//        name2=findViewById(R.id.textname1);
-//        name3=findViewById(R.id.textname2);
-//        name4=findViewById(R.id.textname3);
-//        name5=findViewById(R.id.textname4);
-//
-//        streak2=findViewById(R.id.streak2);
-//        streak3=findViewById(R.id.streak3);
-//        streak4=findViewById(R.id.streak4);
-//        streak5=findViewById(R.id.streak5);
-
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -111,16 +74,15 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
 
-//        fetch_user(user2,name2,streak2,pfp2);
-//        fetch_user(user3,name3,streak3,pfp3);
-//        fetch_user(user4,name4,streak4,pfp4);
-//        fetch_user(user5,name5,streak5,pfp5);
 
+        usersc = fStore.collection("users");
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        spinner.setOnItemSelectedListener(this);
-        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.community,android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        userList = new ArrayList<>();
+        recyclerViewAdapter = new RecyclerViewAdapter(this, userList, this);
+        recyclerView.setAdapter(recyclerViewAdapter);
 
         fStore.collection("users")
                 .get()
@@ -150,6 +112,13 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
                     }
                 });
 
+
+        spinner=findViewById(R.id.spinner);
+        spinner.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.community,android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
     }
 
     @Override
@@ -170,34 +139,8 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
 
-    public void fetch_user(String user, TextView name, TextView streak, ImageView pfp)
-    {
-        StorageReference profileRef2 = storageReference.child("users/"+user+"/profile.jpg");
-        profileRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Picasso.get().load(uri).into(pfp);
-            }
-        });
-
-        documentReference = fStore.collection("users").document(user);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if (documentSnapshot.exists()) {
-
-                    name.setText(documentSnapshot.getString("name"));
-
-                    Object str = documentSnapshot.get("streak");
-                    streak.setText(str.toString() + " \ud83d\udd25");
-
-                } else {
-                    Log.d("tag", "onEvent: Document do not exists" + user);
-                }
-            }
-        });
+    @Override
+    public void itemOnClick(int position) {
+        startActivity(new Intent(this, profile_view.class));
     }
-
-
-
 }
