@@ -119,13 +119,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             @Override
             public void onSuccess(Uri uri) {
                 Picasso.get().load(uri).into(viewHolder.pfp);
-                Toast.makeText(context, "Image loaded "+ uri, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Image loaded "+ uri, Toast.LENGTH_SHORT).show();
 
             }
 
         }
-        ).addOnFailureListener(e -> Toast.makeText(context, "Image not loaded "+ userdb.email , Toast.LENGTH_SHORT).show())
-        ;
+        ).addOnFailureListener(e -> Toast.makeText(context, "Image not loaded "+ userdb.email , Toast.LENGTH_SHORT).show());
 //        String pfp=userdb.pfp;
         viewHolder.name.setText(item);
         viewHolder.streak.setText(userdb.streak.toString());
