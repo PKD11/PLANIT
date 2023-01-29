@@ -1,6 +1,10 @@
 package com.example.planit;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -16,16 +20,23 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class community extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -40,6 +51,11 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     FirebaseFirestore fStore;
     StorageReference storageReference;
     DocumentReference documentReference;
+    CollectionReference usersc;
+    RecyclerView recyclerView;
+    RecyclerViewAdapter recyclerViewAdapter;
+    ArrayList<User> userList;
+
 
     String user2="8YjvylJLtMggw3DntAJzlUQ0c2C3";
     String user3="9sMzX5dKAVNR8Frr9i9tg94OAD32";
@@ -59,6 +75,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        usersc = fStore.collection("users");
 
         pfp2=findViewById(R.id.pfpimage2);
         pfp3=findViewById(R.id.pfpimage3);
@@ -94,6 +111,29 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         ArrayAdapter<CharSequence> adapter=ArrayAdapter.createFromResource(this,R.array.community,android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        fStore.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                //toast
+//                                Toast.makeText(community.this, "testing1", Toast.LENGTH_SHORT).show();
+
+
+                            }
+                        } else {
+//                            Toast.makeText(community.this, "error1", Toast.LENGTH_SHORT).show();
+
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+
     }
 
     @Override
@@ -116,7 +156,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
 
     public void fetch_user(String user, TextView name, TextView streak, ImageView pfp)
     {
-        StorageReference profileRef2 = storageReference.child("users/"+user2+"/profile.jpg");
+        StorageReference profileRef2 = storageReference.child("users/"+user+"/profile.jpg");
         profileRef2.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -141,4 +181,7 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
     }
+
+
+
 }
