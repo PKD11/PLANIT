@@ -12,6 +12,7 @@ public class User {
     public Integer streak;
     public Integer longestStreak;
     public Date lastStreakDate;
+    public User() {}
 
     public User(String userid, String name, Integer age, String email, String location) {
         this.userid = userid;

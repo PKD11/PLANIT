@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
@@ -76,21 +77,30 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         usersc = fStore.collection("users");
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        pfp2=findViewById(R.id.pfpimage2);
-        pfp3=findViewById(R.id.pfpimage3);
-        pfp4=findViewById(R.id.pfpimage4);
-        pfp5=findViewById(R.id.pfpimage5);
+        userList = new ArrayList<>();
+        recyclerViewAdapter = new RecyclerViewAdapter(this, userList);
+        recyclerView.setAdapter(recyclerViewAdapter);
+//        name2.setClickable(true);
 
-        name2=findViewById(R.id.textname1); name2.setClickable(true);
-        name3=findViewById(R.id.textname2);
-        name4=findViewById(R.id.textname3);
-        name5=findViewById(R.id.textname4);
 
-        streak2=findViewById(R.id.streak2);
-        streak3=findViewById(R.id.streak3);
-        streak4=findViewById(R.id.streak4);
-        streak5=findViewById(R.id.streak5);
+//        pfp2=findViewById(R.id.pfpimage2);
+//        pfp3=findViewById(R.id.pfpimage3);
+//        pfp4=findViewById(R.id.pfpimage4);
+//        pfp5=findViewById(R.id.pfpimage5);
+//
+//        name2=findViewById(R.id.textname1);
+//        name3=findViewById(R.id.textname2);
+//        name4=findViewById(R.id.textname3);
+//        name5=findViewById(R.id.textname4);
+//
+//        streak2=findViewById(R.id.streak2);
+//        streak3=findViewById(R.id.streak3);
+//        streak4=findViewById(R.id.streak4);
+//        streak5=findViewById(R.id.streak5);
 
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
@@ -101,10 +111,10 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
             }
         });
 
-        fetch_user(user2,name2,streak2,pfp2);
-        fetch_user(user3,name3,streak3,pfp3);
-        fetch_user(user4,name4,streak4,pfp4);
-        fetch_user(user5,name5,streak5,pfp5);
+//        fetch_user(user2,name2,streak2,pfp2);
+//        fetch_user(user3,name3,streak3,pfp3);
+//        fetch_user(user4,name4,streak4,pfp4);
+//        fetch_user(user5,name5,streak5,pfp5);
 
 
         spinner.setOnItemSelectedListener(this);
@@ -119,13 +129,19 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
+                                User user = document.toObject(User.class);
+//                                user.streak=Integer.parseInt(document.get("streak").toString());
+                                userList.add(user);
 
 //                                Log.d(TAG, document.getId() + " => " + document.getData());
                                 //toast
 //                                Toast.makeText(community.this, "testing1", Toast.LENGTH_SHORT).show();
-
-
                             }
+//                            for (int i = 0; i < userList.size(); i++) {
+////                                Toast.makeText(community.this, userList.get(i).name, Toast.LENGTH_SHORT).show();
+////                                Log.d("TAG", "onComplete: " + userList.get(i).name);
+//                            }
+                            recyclerViewAdapter.notifyDataSetChanged();
                         } else {
 //                            Toast.makeText(community.this, "error1", Toast.LENGTH_SHORT).show();
 
