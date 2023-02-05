@@ -2,6 +2,7 @@ package com.example.planit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -94,6 +95,12 @@ public class profile_view extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(profile_view.this, "Request Sent \ud83d\udc8c", Toast.LENGTH_SHORT).show();
+            }
+        });
+        imageButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(profile_view.this, friendList.class));
             }
         });
     }
