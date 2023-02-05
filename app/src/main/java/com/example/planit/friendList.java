@@ -12,6 +12,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +40,7 @@ public class friendList extends AppCompatActivity implements rcViewClick {
 
     ImageView pfp;
     TextView name,streak;
+    Button following,followers;
 
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -48,7 +51,7 @@ public class friendList extends AppCompatActivity implements rcViewClick {
     CollectionReference usersc;
     RecyclerView recyclerView;
     Following_rcadapter recyclerViewAdapter;
-    ArrayList<User> following;
+    ArrayList<User> follow;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -87,15 +90,15 @@ public class friendList extends AppCompatActivity implements rcViewClick {
             }
         });
 
-        usersc = fStore.collection("users");
+
         recyclerView = findViewById(R.id.following_list);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        following = new ArrayList<>();
-        recyclerViewAdapter = new Following_rcadapter(this, following, this);
+        follow = new ArrayList<>();
+        recyclerViewAdapter = new Following_rcadapter(this, follow, this);
         recyclerView.setAdapter(recyclerViewAdapter);
-
+        usersc = fStore.collection("users");
         fStore.collection("users")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -104,7 +107,7 @@ public class friendList extends AppCompatActivity implements rcViewClick {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 User user = document.toObject(User.class);
-                                following.add(user);
+                                follow.add(user);
                                 recyclerViewAdapter.notifyDataSetChanged();
                             }
                         }else {
@@ -113,6 +116,57 @@ public class friendList extends AppCompatActivity implements rcViewClick {
                     }
                 });
 
+        following=findViewById(R.id.following);
+        followers=findViewById(R.id.followers);
+        following.setEnabled(false);
+        following.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usersc = fStore.collection("users");
+                fStore.collection("users")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        User user = document.toObject(User.class);
+                                        follow.add(user);
+                                        recyclerViewAdapter.notifyDataSetChanged();
+                                    }
+                                }else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                following.setEnabled(false);
+                followers.setEnabled(true);
+            }
+        });
+        followers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                usersc = fStore.collection("users");
+                fStore.collection("users")
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    for (QueryDocumentSnapshot document : task.getResult()) {
+                                        User user = document.toObject(User.class);
+                                        follow.add(user);
+                                        recyclerViewAdapter.notifyDataSetChanged();
+                                    }
+                                }else {
+                                    Log.d(TAG, "Error getting documents: ", task.getException());
+                                }
+                            }
+                        });
+                followers.setEnabled(false);
+                following.setEnabled(true);
+            }
+        });
 
     }
 

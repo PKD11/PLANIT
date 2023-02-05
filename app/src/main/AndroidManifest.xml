@@ -19,7 +19,7 @@
         <activity
             android:name=".friendList"
             android:exported="false"
-            android:label="Following">
+            android:label="Connections">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />

@@ -108,7 +108,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             connect.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(view.getContext(), "Request Sent \ud83d\udc8c", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(view.getContext(), "Following \ud83d\udc8c", Toast.LENGTH_SHORT).show();
                 }
             });
         }
