@@ -20,7 +20,7 @@ public class User {
         this.age = age;
         this.email = email;
         this.location = location;
-        this.streak = 2;
+        this.streak = 0;
         this.longestStreak = 6;
         this.lastStreakDate = new Date();
 
