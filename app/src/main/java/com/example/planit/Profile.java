@@ -111,6 +111,12 @@ public class Profile extends AppCompatActivity {
                 startActivityForResult(intent,100);
             }
         });
+        imageButton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Profile.this, friendList.class));
+            }
+        });
         imageButton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
