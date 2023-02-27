@@ -234,7 +234,7 @@ recyclerView.setAdapter(recyclerViewAdapter);
     @Override
     public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
         String userId = documentSnapshot.getId();
-        Toast.makeText(this, "You clicked " + userId, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "You clicked " + userId, Toast.LENGTH_SHORT).show();
         if(position != RecyclerView.NO_POSITION && documentSnapshot.exists()){
             User user = documentSnapshot.toObject(User.class);
              userId = documentSnapshot.getId();
