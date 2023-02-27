@@ -51,8 +51,9 @@ public class profile_view extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
+        String userId = getIntent().getStringExtra("userId");
 
-        StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
+        StorageReference profileRef = storageReference.child("users/"+userId+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
@@ -60,7 +61,8 @@ public class profile_view extends AppCompatActivity {
             }
         });
 
-        userId = fAuth.getCurrentUser().getUid();
+
+//        userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
 
         documentReference = fStore.collection("users").document(userId);

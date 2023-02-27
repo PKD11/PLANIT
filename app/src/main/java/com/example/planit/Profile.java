@@ -84,8 +84,8 @@ public class Profile extends AppCompatActivity {
                 Picasso.get().load(uri).into(imageView);
             }
         });
-        userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
+        userId = user.getUid();
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -39,7 +41,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class community extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class community extends AppCompatActivity implements AdapterView.OnItemSelectedListener, RecyclerViewAdapter.OnItemClickListener{
 
     Spinner spinner;
     ImageView imageViewreg;
@@ -82,7 +84,8 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         userList = new ArrayList<>();
-        recyclerViewAdapter = new RecyclerViewAdapter(this, userList);
+        setUpRecyclerView();
+//        recyclerViewAdapter = new RecyclerViewAdapter(this, userList);
         recyclerView.setAdapter(recyclerViewAdapter);
 //        name2.setClickable(true);
 
@@ -152,6 +155,35 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
 
     }
 
+    private void setUpRecyclerView() {
+        Query query = usersc.orderBy("streak", Query.Direction.DESCENDING);
+        FirestoreRecyclerOptions<User> options= new FirestoreRecyclerOptions.Builder<User>()
+                .setQuery(query, User.class).build();
+        recyclerViewAdapter = new RecyclerViewAdapter(options);
+        recyclerViewAdapter.setOnItemClickListener(this);
+
+    recyclerView.setAdapter(recyclerViewAdapter);
+    recyclerView.setHasFixedSize(true);
+recyclerView.setLayoutManager(new LinearLayoutManager(this));
+recyclerView.setAdapter(recyclerViewAdapter);
+
+
+
+    }
+
+    protected void onStart() {
+        super.onStart();
+        recyclerViewAdapter.startListening();
+    }
+//    protected void onStop() {
+//        super.onStop();
+//        recyclerViewAdapter.stopListening();
+//    }
+//    protected void onResume() {
+//        super.onResume();
+//        recyclerViewAdapter.startListening();
+//    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         String func= adapterView.getItemAtPosition(i).toString();
@@ -199,5 +231,25 @@ public class community extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
 
+    @Override
+    public void onItemClick(DocumentSnapshot documentSnapshot, int position) {
+        String userId = documentSnapshot.getId();
+        Toast.makeText(this, "You clicked " + userId, Toast.LENGTH_SHORT).show();
+        if(position != RecyclerView.NO_POSITION && documentSnapshot.exists()){
+            User user = documentSnapshot.toObject(User.class);
+             userId = documentSnapshot.getId();
+//            Toast.makeText(this, "You clicked " + userId, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, profile_view.class);
+            intent.putExtra("userId", userId);
+            startActivity(intent);
+        }
 
+
+
+
+//        String userId = documentSnapshot.getId();
+
+        // create an intent to start the profile view activity
+
+    }
 }
