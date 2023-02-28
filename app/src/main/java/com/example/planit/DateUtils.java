@@ -14,7 +14,7 @@ import java.util.TimeZone;
  */
 public final class DateUtils {
 
-    private DateUtils(){/*Utility class*/}
+    DateUtils(){/*Utility class*/}
 
     /**
      * Returns current date with hour,minutes,seconds all set to zero

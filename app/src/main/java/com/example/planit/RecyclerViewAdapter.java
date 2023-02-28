@@ -43,8 +43,8 @@ public class RecyclerViewAdapter extends FirestoreRecyclerAdapter< User,Recycler
 
     @Override
     protected void onBindViewHolder(@NonNull ViewHolder holder, int position, @NonNull User model) {
-           holder.textViewName.setText(model.getName());
-           holder.textViewStreak.setText(String.valueOf(model.getStreak()));
+        holder.textViewName.setText(model.getName());
+        holder.textViewStreak.setText(String.valueOf(model.getStreak()));
 //           holder.pfp.setImageResource(model.getProfilePictureUrl());
         Glide.with(holder.itemView.getContext())
                 .load(model.getProfilePictureUrl())
@@ -55,7 +55,7 @@ public class RecyclerViewAdapter extends FirestoreRecyclerAdapter< User,Recycler
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row,parent,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row,parent,false);
 
         return new ViewHolder(v);
     }

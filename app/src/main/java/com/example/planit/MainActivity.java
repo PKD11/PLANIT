@@ -1,7 +1,5 @@
 package com.example.planit;
 
-import static com.example.planit.DateUtils.*;
-
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -46,8 +44,6 @@ import org.tensorflow.lite.support.tensorbuffer.TensorBuffer;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.Date;
-import java.util.concurrent.CountDownLatch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -70,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
     String userId;
     Integer currentStreak;
     String streak;
-    Date lastDate, currentDate;
-    Boolean isSameDay;
 
     DocumentReference documentReference;
 
@@ -110,51 +104,13 @@ public class MainActivity extends AppCompatActivity {
         textView4=findViewById(R.id.TextView4);
         textView5=findViewById(R.id.TextView5);
         textView6=findViewById(R.id.TextView6);
-        //get current date
-
-        currentDate= new Date();
-//         currentDate = getCurrentDateWithoutTime();
-         isSameDay=false;
-
 
         fAuth = FirebaseAuth.getInstance();
         fStore = FirebaseFirestore.getInstance();
         storageReference = FirebaseStorage.getInstance().getReference();
         userId = fAuth.getCurrentUser().getUid();
         user = fAuth.getCurrentUser();
-        documentReference = fStore.collection("users").document(userId);
-//        final CountDownLatch latch = new CountDownLatch(1);
-//        lastDate=documentReference.;
 
-
-
-
-            documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@javax.annotation.Nullable DocumentSnapshot documentSnapshot, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                if(documentSnapshot.exists()){
-                    lastDate = documentSnapshot.getDate("lastStreakDate");
-                    Log.d("tag", "laststreakdate1 "+lastDate);
-                }
-                else {
-                    Log.d("tag", "onEvent: Document do not exists"+userId);
-//                    Log.d("tag", "onEvent: Document do not exists");
-                }
-            }
-        });
-//        try {
-//            latch.await();
-//        } catch (InterruptedException e) {
-//            //print stack trace
-//            e.printStackTrace();
-//        }
-
-        Log.d("tag", "laststreakdate2 "+lastDate);
-
-        Log.d("tag", "current Date "+ currentDate);
-
-//         isSameDay= areSameDate(currentDate,lastDate);
-//        isSameDay=areSameDate(currentDate,currentDate);
 
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg");
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -163,7 +119,8 @@ public class MainActivity extends AppCompatActivity {
                 Picasso.get().load(uri).into(ProfilePic);
             }
         });
-        Log.d("tag", "laststreakdate3 "+lastDate);
+
+        documentReference = fStore.collection("users").document(userId);
 
         button6.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -353,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
 
             imageView2.setImageBitmap(b2);
             checkBox2.setEnabled(true);
+
         }
         if(requestCode==200 && resultCode==RESULT_OK)
         {
@@ -438,9 +396,7 @@ public class MainActivity extends AppCompatActivity {
                 tv.setText(task[isvalid(arr)]);
                 Toast.makeText(MainActivity.this, R.string.verified, Toast.LENGTH_SHORT).show();
 //                buttonSub.setEnabled(true);
-                if(!isSameDay) {
-                    buttonSub.setClickable(true);
-                }
+                buttonSub.setClickable(true);
                 verified=true;
 
             }
@@ -450,11 +406,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void updateStreak(){
-if(!areSameDate(lastDate,currentDate)) {
-    documentReference.update("streak", FieldValue.increment(1));
-    documentReference.update("lastStreakDate", currentDate);
-    Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25", Toast.LENGTH_SHORT).show();
 
+        documentReference.update("streak", FieldValue.increment(1));
 
 //        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
 //            @Override
@@ -484,12 +438,7 @@ if(!areSameDate(lastDate,currentDate)) {
 //        Log.d("tag", "updatedStreak: "+currentStreak);
 
 //        Toast.makeText(MainActivity.this, "Streak +1" + "\ud83d\udd25"+ currentStreak, Toast.LENGTH_SHORT).show();
-}
-else
-{
-    Toast.makeText(MainActivity.this, "You have already completed today's task" , Toast.LENGTH_SHORT).show();
 
-}
 
     }
 

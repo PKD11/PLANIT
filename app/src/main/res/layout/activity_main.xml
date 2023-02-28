@@ -376,5 +376,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.049" />
 
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="90dp"
+        android:layout_height="46dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="32dp"
+        android:textAlignment="center"
+        android:visibility="invisible"
+        android:hint="view timer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/buttonSubmit"
+        app:layout_constraintTop_toTopOf="@+id/buttonSubmit"
+        app:layout_constraintVertical_bias="0.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
